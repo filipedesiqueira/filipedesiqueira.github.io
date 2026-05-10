@@ -1,1 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soberania Cognitiva · Filipe Siqueira</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  body {
+    background: #02040a;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .card {
+    width: 600px;
+    height: 600px;
+    background: #02040a;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(255,59,48,0.07), 0 0 160px rgba(30,80,200,0.04);
+  }
+
+  /* ── FUNDO ── */
+  .bg-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(30,80,200,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,80,200,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    animation: gridDrift 25s linear infinite;
+  }
+  @keyframes gridDrift { from{background-position:0 0;} to{background-position:28px 28px;} }
+
+  .glow-top {
+    position: absolute; top:-100px; right:-100px;
+    width:320px; height:320px; pointer-events:none;
+    background: radial-gradient(circle, rgba(255,59,48,0.12) 0%, transparent 65%);
+    animation: glowPulse 5s ease-in-out infinite;
+  }
+  .glow-bottom {
+    position: absolute; bottom:-60px; left:-60px;
+    width:200px; height:200px; pointer-events:none;
+    background: radial-gradient(circle, rgba(30,80,200,0.08) 0%, transparent 65%);
+    animation: glowPulse 7s ease-in-out infinite reverse;
+  }
+  @keyframes glowPulse { 0%,100%{opacity:.5;transform:scale(1);} 50%{opacity:1;transform:scale(1.2);} }
+
+  .scanline {
+    position:absolute; left:0; right:0; height:1px; z-index:3; pointer-events:none;
+    background: linear-gradient(90deg, transparent, rgba(74,122,255,0.2) 40%, rgba(255,59,48,0.1) 60%, transparent);
+    animation: scan 8s linear infinite;
+  }
+  @keyframes scan { 0%{top:-1px;opacity:0;} 5%{opacity:1;} 95%{opacity:1;} 100%{top:100%;opacity:0;} }
+
+  .left-border {
+    position:absolute; left:0; top:0; width:3px; z-index:4;
+    background: linear-gradient(180deg, #ff3b30, rgba(255,59,48,0.15));
+    height:0; animation: borderGrow 1s cubic-bezier(0.16,1,0.3,1) forwards 0.2s;
+  }
+  @keyframes borderGrow { to{height:100%;} }
+
+  /* ── LAYOUT ── */
+  .content {
+    position: relative; z-index: 2;
+    padding: 28px 40px 24px 46px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* ── EYEBROW ── */
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 3px;
+    color: #4a7aff; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeUp 0.5s ease forwards 0.3s;
+    flex-shrink: 0;
+  }
+  .eyebrow-dot {
+    width: 6px; height: 6px; background: #ff3b30;
+    border-radius: 50%; flex-shrink: 0;
+    box-shadow: 0 0 6px #ff3b30;
+    animation: dotBlink 1.5s ease-in-out infinite;
+  }
+  @keyframes dotBlink { 0%,100%{opacity:1;box-shadow:0 0 6px #ff3b30;} 50%{opacity:.2;box-shadow:none;} }
+
+  /* ── TÍTULO ── */
+  .title-block { flex-shrink: 0; overflow: hidden; }
+  .title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px; line-height: 0.92;
+    letter-spacing: 2px;
+  }
+  .tl { display: block; overflow: hidden; }
+  .tl-inner {
+    display: block; opacity: 0; transform: translateY(100%);
+    animation: lineReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .tl:nth-child(1) .tl-inner { animation-delay: .4s; color: #f2f2f2; }
+  .tl:nth-child(2) .tl-inner { animation-delay: .6s; color: #ff3b30; text-shadow: 0 0 24px rgba(255,59,48,.35); }
+  .tl:nth-child(3) .tl-inner { animation-delay: .8s; color: #f2f2f2; }
+  @keyframes lineReveal { to{opacity:1;transform:translateY(0);} }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; color: #4a5a7a; letter-spacing: 2px;
+    margin-top: 5px;
+    opacity: 0; animation: fadeUp 0.5s ease forwards 1s;
+  }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+
+  /* ── FLUXO ── */
+  .fluxo {
+    flex-shrink: 0;
+    opacity: 0; animation: fadeUp 0.6s ease forwards 1.2s;
+  }
+  .fluxo-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    color: #4a5a7a; text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+  .fluxo-row { display: flex; align-items: stretch; }
+
+  .fluxo-box {
+    flex: 1; padding: 9px 11px;
+    border: 1px solid;
+    position: relative; overflow: hidden;
+    transition: border-color 0.5s, background 0.5s, box-shadow 0.5s;
+  }
+  .fluxo-box.origem  { border-color: #1a2e5a; background: rgba(20,40,100,.2); }
+  .fluxo-box.meio    { border-color: #3a1a1a; background: rgba(90,20,20,.2); border-left: none; border-right: none; }
+  .fluxo-box.destino { border-color: rgba(255,59,48,.3); background: rgba(255,59,48,.07); }
+
+  .fluxo-box.hl {
+    border-color: rgba(255,59,48,0.75) !important;
+    background: rgba(255,59,48,0.14) !important;
+    box-shadow: 0 0 20px rgba(255,59,48,0.12);
+  }
+
+  .fluxo-box-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .fluxo-box.origem .fluxo-box-label  { color: #6a8abf; }
+  .fluxo-box.meio .fluxo-box-label    { color: #8a5a5a; }
+  .fluxo-box.destino .fluxo-box-label { color: rgba(255,100,90,.8); }
+
+  .fluxo-box-text { font-size: 11px; font-weight: 600; line-height: 1.35; }
+  .fluxo-box.origem .fluxo-box-text  { color: #8aaad8; }
+  .fluxo-box.meio .fluxo-box-text    { color: #c08080; }
+  .fluxo-box.destino .fluxo-box-text { color: #f2f2f2; }
+
+  .fluxo-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 22px; flex-shrink: 0; font-size: 12px;
+    transition: color 0.4s;
+    animation: arrowFlow 1.8s ease-in-out infinite;
+  }
+  .fluxo-arrow:nth-child(2) { color: #3a5a8a; animation-delay: 0s; }
+  .fluxo-arrow:nth-child(4) { color: rgba(255,80,60,.7); animation-delay: .4s; }
+  .fluxo-arrow.hl { color: #ff3b30 !important; }
+  @keyframes arrowFlow { 0%,100%{opacity:.4;transform:translateX(0);} 50%{opacity:1;transform:translateX(3px);} }
+
+  /* ── CADEIA ── */
+  .cadeia { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  .cadeia-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    color: #4a5a7a; text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0; animation: fadeUp 0.5s ease forwards 1.5s;
+  }
+
+  .cadeia-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    position: relative; overflow: hidden;
+    opacity: 0;
+    transition: border-color 0.5s, background 0.5s;
+  }
+  .cadeia-item:nth-child(2) { animation: fadeUp 0.5s ease forwards 1.7s; }
+  .cadeia-item:nth-child(3) { animation: fadeUp 0.5s ease forwards 2.0s; }
+  .cadeia-item:nth-child(4) { animation: fadeUp 0.5s ease forwards 2.3s; }
+
+  .cadeia-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: #ff3b30; transform: scaleY(0);
+    transition: transform 0.4s ease; transform-origin: top;
+  }
+  .cadeia-item.hl {
+    border-color: rgba(255,59,48,0.22);
+    background: rgba(255,59,48,0.05);
+  }
+  .cadeia-item.hl::before { transform: scaleY(1); }
+
+  .cadeia-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; line-height: 1;
+    flex-shrink: 0; width: 26px;
+    color: #2a3a5a;
+    transition: color 0.4s;
+  }
+  .cadeia-item.hl .cadeia-num { color: #ff3b30; }
+
+  .cadeia-content { padding-top: 1px; }
+  .cadeia-title {
+    font-size: 12px; color: #aaa;
+    font-weight: 600; margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .cadeia-title strong { color: #f2f2f2; }
+  .cadeia-desc {
+    font-size: 10px; color: #666; line-height: 1.4;
+    transition: color 0.4s;
+  }
+  .cadeia-item.hl .cadeia-desc { color: #999; }
+
+  /* ── FOOTER ── */
+  .footer {
+    flex-shrink: 0;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-top: 10px; border-top: 1px solid #0e1e30;
+    opacity: 0; animation: fadeUp 0.5s ease forwards 2.6s;
+  }
+  .autor-nome {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px; color: #f2f2f2; letter-spacing: 2px;
+  }
+  .autor-cargo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px; color: #3a4a5a; letter-spacing: 1px; margin-top: 3px;
+  }
+  .tag-projeto {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 3px;
+    animation: tagCycle 4s ease-in-out infinite 3.5s;
+  }
+  @keyframes tagCycle {
+    0%,45%  { color: #4a7aff; opacity: .5; }
+    50%,95% { color: #ff3b30; opacity: .8; }
+    100%    { color: #4a7aff; opacity: .5; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="bg-grid"></div>
+  <div class="glow-top"></div>
+  <div class="glow-bottom"></div>
+  <div class="scanline"></div>
+  <div class="left-border"></div>
+
+  <div class="content">
+
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      Soberania · Dependência · Defesa Nacional
+    </div>
+
+    <div class="title-block">
+      <div class="title">
+        <span class="tl"><span class="tl-inner">Soberania</span></span>
+        <span class="tl"><span class="tl-inner">Cognitiva</span></span>
+        <span class="tl"><span class="tl-inner">em Risco</span></span>
+      </div>
+      <div class="subtitle">// A dependência começa muito antes da infraestrutura</div>
+    </div>
+
+    <div class="fluxo">
+      <div class="fluxo-label">// O fluxo da dependência</div>
+      <div class="fluxo-row">
+        <div class="fluxo-box origem" id="box-origem">
+          <div class="fluxo-box-label">Origem</div>
+          <div class="fluxo-box-text">Ferramenta desenvolvida por terceiros</div>
+        </div>
+        <div class="fluxo-arrow" id="arrow1">→</div>
+        <div class="fluxo-box meio" id="box-meio">
+          <div class="fluxo-box-label">Adoção</div>
+          <div class="fluxo-box-text">Operador consome resultado sem entender o processo</div>
+        </div>
+        <div class="fluxo-arrow" id="arrow2">→</div>
+        <div class="fluxo-box destino" id="box-destino">
+          <div class="fluxo-box-label">Consequência</div>
+          <div class="fluxo-box-text">Decisão estratégica baseada em premissas importadas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cadeia">
+      <div class="cadeia-label">// A cadeia de comprometimento</div>
+      <div class="cadeia-item" id="item1">
+        <div class="cadeia-num">01</div>
+        <div class="cadeia-content">
+          <div class="cadeia-title">O analista <strong>não questiona</strong> o output da ferramenta</div>
+          <div class="cadeia-desc">Porque nunca aprendeu o processo — só o resultado</div>
+        </div>
+      </div>
+      <div class="cadeia-item" id="item2">
+        <div class="cadeia-num">02</div>
+        <div class="cadeia-content">
+          <div class="cadeia-title">O gestor <strong>não interpreta</strong> o relatório criticamente</div>
+          <div class="cadeia-desc">Porque confia em quem produz — que também não entende</div>
+        </div>
+      </div>
+      <div class="cadeia-item" id="item3">
+        <div class="cadeia-num">03</div>
+        <div class="cadeia-content">
+          <div class="cadeia-title">O CISO <strong>não sabe</strong> o que está por baixo da decisão</div>
+          <div class="cadeia-desc">Porque os valores e premissas nunca foram auditados</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <div class="autor-nome">Filipe Siqueira</div>
+        <div class="autor-cargo">Deputy CISO · ComDCiber · Major do Exército Brasileiro</div>
+      </div>
+      <div class="tag-projeto">Radix Cyber</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  function hl(id, duration = 900) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('hl');
+    setTimeout(() => el.classList.remove('hl'), duration);
+  }
+
+  async function sequence() {
+    await wait(3000);
+
+    hl('box-origem', 800);
+    await wait(600);
+    document.getElementById('arrow1').classList.add('hl');
+    await wait(400);
+    document.getElementById('arrow1').classList.remove('hl');
+    hl('box-meio', 800);
+    await wait(600);
+    document.getElementById('arrow2').classList.add('hl');
+    await wait(400);
+    document.getElementById('arrow2').classList.remove('hl');
+    hl('box-destino', 800);
+    await wait(900);
+
+    hl('item1', 800);
+    await wait(900);
+    hl('item2', 800);
+    await wait(900);
+    hl('item3', 800);
+    await wait(1200);
+
+    await wait(1400);
+    sequence();
+  }
+
+  window.addEventListener('load', () => setTimeout(sequence, 500));
+</script>
+</body>
+</html>
