@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Filipe de Siqueira — Oficial do Exército Brasileiro. Produção autoral em cibersegurança, ética em IA e soberania digital. Projeto Radix Cyber.">
+<title>Filipe de Siqueira — Cibersegurança · Ética em IA · Soberania Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6;
+    --bg-alt: #f1ede8;
+    --bg-dark: #111318;
+    --red: #c8342a;
+    --red-light: #f5ece9;
+    --blue: #1a3a6b;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-dim: #888;
+    --border: #e2ddd7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--red); letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text-mid); text-decoration: none; transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red) !important; color: white !important;
+    padding: 0.4rem 1.1rem; border-radius: 3px;
+    font-size: 0.8rem !important; transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 88vh; max-width: 1100px;
+    margin: 0 auto; padding: 5rem 2.5rem;
+    gap: 4rem; align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--red-light); color: var(--red);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.35rem 0.75rem; border-radius: 2px; margin-bottom: 1.8rem;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 900;
+    line-height: 1.08; color: var(--text);
+    margin-bottom: 0.4rem; letter-spacing: -0.02em;
+  }
+
+  .hero-name em { font-style: normal; color: var(--red); }
+
+  .hero-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; color: var(--text-dim);
+    letter-spacing: 0.05em; margin-bottom: 2rem;
+  }
+
+  .hero-tese {
+    font-size: 1.05rem; line-height: 1.75; color: var(--text-mid);
+    border-left: 3px solid var(--red); padding-left: 1.2rem;
+    margin-bottom: 2.5rem; font-style: italic;
+  }
+
+  .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-outline {
+    border: 1.5px solid var(--border); color: var(--text-mid);
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 500; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--text-mid); color: var(--text); }
+
+  .hero-right { display: flex; flex-direction: column; gap: 1rem; }
+
+  .profile-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 2rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  }
+
+  .profile-photo {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; color: white; margin-bottom: 1rem;
+  }
+
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem;
+  }
+
+  .profile-title { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1.2rem; line-height: 1.5; }
+
+  .profile-certs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .cert-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    background: var(--bg-alt); color: var(--blue);
+    padding: 0.25rem 0.5rem; border-radius: 2px;
+    letter-spacing: 0.05em; font-weight: 500;
+  }
+
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+  .stat-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1rem 1.2rem;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--red); line-height: 1; margin-bottom: 0.3rem;
+  }
+
+  .stat-label { font-size: 0.72rem; color: var(--text-dim); line-height: 1.4; }
+
+  .section-divider { border: none; border-top: 1px solid var(--border); }
+
+  .section { max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem; }
+
+  .section-alt { background: var(--bg-alt); }
+
+  .section-header { margin-bottom: 3rem; }
+
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+    color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 700; color: var(--text); line-height: 1.2;
+  }
+
+  .section-sub { font-size: 0.95rem; color: var(--text-mid); margin-top: 0.5rem; max-width: 560px; }
+
+  .conceitos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+  .conceito-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-top: 3px solid var(--red); border-radius: 6px; padding: 1.6rem;
+    transition: box-shadow 0.25s, transform 0.25s; text-decoration: none; display: block;
+  }
+
+  .conceito-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+  .conceito-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--red); letter-spacing: 0.1em; margin-bottom: 0.7rem; }
+
+  .conceito-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.3; }
+
+  .conceito-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+
+  .blog-list { display: flex; flex-direction: column; }
+
+  .blog-item {
+    display: grid; grid-template-columns: 120px 1fr auto;
+    gap: 2rem; align-items: start; padding: 2rem 0;
+    border-bottom: 1px solid var(--border); text-decoration: none;
+  }
+
+  .blog-item:first-child { border-top: 1px solid var(--border); }
+  .blog-item:hover .blog-title { color: var(--red); }
+
+  .blog-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-dim); padding-top: 0.2rem; line-height: 1.5; }
+
+  .blog-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
+
+  .blog-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 0.5rem; transition: color 0.2s; }
+
+  .blog-excerpt { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; }
+
+  .blog-arrow { color: var(--text-dim); font-size: 1rem; padding-top: 0.3rem; transition: color 0.2s, transform 0.2s; }
+
+  .blog-item:hover .blog-arrow { color: var(--red); transform: translateX(3px); }
+
+  .infog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+  .infog-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; aspect-ratio: 4/3;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 0.8rem; text-decoration: none;
+    transition: box-shadow 0.2s, border-color 0.2s; padding: 1.5rem;
+  }
+
+  .infog-card:hover { border-color: var(--red); box-shadow: 0 4px 20px rgba(200,52,42,0.08); }
+
+  .infog-icon { font-size: 2rem; }
+
+  .infog-label { font-size: 0.8rem; font-weight: 600; color: var(--text-mid); text-align: center; line-height: 1.4; }
+
+  .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+  .sobre-text p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.2rem; }
+
+  .sobre-text p strong { color: var(--text); font-weight: 600; }
+
+  .certs-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+
+  .certs-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+
+  .cert-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 1rem; background: var(--white); border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; font-weight: 500; color: var(--text); }
+
+  .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+
+  .biblio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; }
+
+  .biblio-item { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+
+  .biblio-item:nth-child(odd) { border-right: 1px solid var(--border); }
+
+  .biblio-item:hover { background: var(--white); }
+
+  .biblio-code { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--blue); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+
+  .biblio-ref { font-size: 0.82rem; color: var(--text-mid); line-height: 1.55; }
+
+  .biblio-note { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-dim); font-style: italic; padding-top: 1.5rem; border-top: 1px solid var(--border); margin-top: 0.5rem; }
+
+  .biblio-download {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+    background: var(--white); border: 1.5px solid var(--border); color: var(--text-mid);
+    padding: 0.7rem 1.4rem; border-radius: 3px; font-size: 0.82rem; font-weight: 500;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+
+  .biblio-download:hover { border-color: var(--red); color: var(--red); }
+
+  .contato-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+
+  .contato-card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    padding: 2rem; text-align: center; text-decoration: none;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .contato-card:hover { border-color: var(--red); box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+  .contato-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .contato-name { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.3rem; }
+  .contato-handle { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-dim); }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a { font-size: 0.78rem; color: #6a7a8a; text-decoration: none; transition: color 0.2s; }
+
+  .footer-links a:hover { color: #f2f2f2; }
+
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * { animation: fadeUp 0.6s ease both; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; gap: 2.5rem; }
+    .conceitos-grid, .infog-grid, .contato-grid, .biblio-grid, .sobre-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .blog-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .blog-date { display: none; }
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links li:nth-child(n+4) { display: none; }
+    .section { padding: 3.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#infograficos">Infográficos</a></li>
+    <li><a href="#bibliografia">Bibliografia</a></li>
+    <li><a href="#contato" class="nav-cta">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">⬡ Cibersegurança · Ética em IA · Soberania Digital</div>
+    <h1 class="hero-name">Filipe<br>de <em>Siqueira</em></h1>
+    <p class="hero-role">// CEH · CPTE · CNSE · CSAE</p>
+    <blockquote class="hero-tese">
+      A IA está extinguindo silenciosamente o operador que pensa do zero. Em cibersegurança, isso não é apenas uma perda técnica — é uma vulnerabilidade estratégica nacional.
+    </blockquote>
+    <div class="hero-btns">
+      <a href="#blog" class="btn-primary">Ler o Blog</a>
+      <a href="https://www.linkedin.com/in/filipedesiqueira" target="_blank" class="btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-card">
+      <div class="profile-photo">FS</div>
+      <div class="profile-name">Filipe de Siqueira</div>
+      <div class="profile-title">Oficial do Exército Brasileiro<br>Projeto Radix Cyber — Brasília</div>
+      <div class="profile-certs">
+        <span class="cert-tag">CEH</span>
+        <span class="cert-tag">CPTE</span>
+        <span class="cert-tag">CNSE</span>
+        <span class="cert-tag">CSAE</span>
+        <span class="cert-tag">Guerreiro Cibernético</span>
+        <span class="cert-tag">Missão ONU — Haiti</span>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">20</div>
+        <div class="stat-label">anos em Tecnologia da Informação</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">7</div>
+        <div class="stat-label">anos em Cibersegurança</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">EGC</div>
+        <div class="stat-label">Coordenador TI · Hub SP · Hub Curitiba</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">conceitos originais publicados</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEITOS -->
+<div class="section-alt">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Ideias que guiam este trabalho</div>
+      <h2 class="section-title">Conceitos Originais</h2>
+      <p class="section-sub">Cada artigo no blog aprofunda um desses conceitos.</p>
+    </div>
+    <div class="conceitos-grid">
+      <a href="#blog" class="conceito-card">
+        <div class="conceito-num">01 — Conceito</div>
+        <div class="conceito-title">O Último Operador</div>
+        <div class="conceito-desc">Taticamente, perde-se o operador que age quando o sistema falha. Operacionalmente, cria-se a ilusão de maturidade. Estrategicamente, uma nação que não forma quem pensa do zero torna-se cognitivamente dependente de tecnologia que não controla.</div>
+      </a>
+      <a href="#blog" class="conceito-card">
+        <div class="conceito-num">02 — Conceito</div>
+        <div class="conceito-title">Soberania Cognitiva</div>
+        <div class="conceito-desc">A capacidade nacional de preservar o julgamento humano como ativo estratégico — independente de plataformas, algoritmos ou infraestruturas de terceiros.</div>
+      </a>
+      <a href="#blog" class="conceito-card">
+        <div class="conceito-num">03 — Framework</div>
+        <div class="conceito-title">Tríade EDR</div>
+        <div class="conceito-desc">Explicabilidade, Due Diligence Algorítmica e Responsabilização — extensão estrutural da Tríade CIA para o contexto de IA em cibersegurança.</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- BLOG -->
+<div id="blog" class="section">
+  <div class="section-header">
+    <div class="section-tag">Produção Autoral</div>
+    <h2 class="section-title">Blog</h2>
+    <p class="section-sub">Artigos publicados aqui primeiro. Versões resumidas no LinkedIn com link para o texto completo.</p>
+  </div>
+  <div class="blog-list">
+    <a href="artigos/o-ultimo-operador.html" class="blog-item">
+      <div class="blog-date">ABR 2026</div>
+      <div class="blog-content">
+        <div class="blog-tag">Automação · Defesa Cibernética</div>
+        <div class="blog-title">O Último Operador — Quando a automação extingue quem realmente sabe pensar</div>
+        <div class="blog-excerpt">Num jantar executivo no Security Leaders Brasília, a conversa foi além do protocolo. Fiz uma pergunta que estava me inquietando: até que ponto o excesso de automação está comprometendo o desenvolvimento dos nossos especialistas? A pergunta ficou na mesa.</div>
+      </div>
+      <div class="blog-arrow">↗</div>
+    </a>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- INFOGRÁFICOS -->
+<div id="infograficos" class="section-alt">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Visualizações</div>
+      <h2 class="section-title">Infográficos</h2>
+      <p class="section-sub">Materiais interativos em HTML. Clique para abrir.</p>
+    </div>
+    <div class="infog-grid">
+      <a href="infograficos/dashboard-verde.html" class="infog-card">
+        <div class="infog-icon">📊</div>
+        <div class="infog-label">O Dashboard Está Verde. Mas Alguém Entende o Processo?</div>
+      </a>
+      <a href="infograficos/triade-edr.html" class="infog-card">
+        <div class="infog-icon">🔺</div>
+        <div class="infog-label">EDR — A Tríade que Falta no GRC</div>
+      </a>
+      <a href="infograficos/soberania-cognitiva.html" class="infog-card">
+        <div class="infog-icon">🧠</div>
+        <div class="infog-label">Consciência Situacional e Soberania Cognitiva</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SOBRE -->
+<div id="sobre" class="section">
+  <div class="section-header">
+    <div class="section-tag">Trajetória</div>
+    <h2 class="section-title">Sobre</h2>
+  </div>
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <p>Vinte anos em Tecnologia da Informação, sete deles dedicados à cibersegurança. Oficial do Exército Brasileiro, construí minha trajetória na interseção entre operações de campo, formação acadêmica e governança cibernética estratégica.</p>
+      <p>Atuei como <strong>Diretor Acadêmico da Escola Nacional de Defesa Cibernética</strong>, responsável pela formação de profissionais para o ecossistema de defesa cibernética nacional. No <strong>Exercício Guardião Cibernético (EGC)</strong>, maior exercício de defesa cibernética da América Latina, exerci as funções de Coordenador de TI e Vice-Coordenador dos Hubs São Paulo e Curitiba.</p>
+      <p>Minha formação não se limitou às salas de aula. Sou oficial combatente com <strong>experiência operacional em ambientes de alta pressão</strong> e missão de paz internacional pela ONU — Haiti, BRABAT 18. Essa vivência moldou uma visão de segurança que vai além dos frameworks: segurança é, antes de tudo, decisão sob pressão e responsabilidade sobre consequências reais.</p>
+      <p>Hoje produzo conteúdo autoral sobre soberania cibernética, ética em IA e a formação do operador humano em um ambiente de crescente automação. Esse projeto se chama <strong>Radix Cyber</strong>.</p>
+    </div>
+    <div>
+      <div class="certs-title">Certificações</div>
+      <div class="certs-list">
+        <div class="cert-item"><span class="cert-dot"></span>CEH — Certified Ethical Hacker</div>
+        <div class="cert-item"><span class="cert-dot"></span>CPTE — Certified Penetration Testing Engineer</div>
+        <div class="cert-item"><span class="cert-dot"></span>CNSE — Certified Network Security Engineer</div>
+        <div class="cert-item"><span class="cert-dot"></span>CSAE — Certified Security Awareness Expert</div>
+        <div class="cert-item"><span class="cert-dot"></span>Guerreiro Cibernético — Centro de Guerra Eletrônica do Exército</div>
+      </div>
+      <div class="certs-title">Formação</div>
+      <div class="certs-list">
+        <div class="cert-item"><span class="cert-dot"></span>Bacharelado em Sistemas de Informação</div>
+        <div class="cert-item"><span class="cert-dot"></span>Pós-graduação em Guerra Cibernética</div>
+        <div class="cert-item"><span class="cert-dot"></span>Pós-graduação em Ciências Militares</div>
+        <div class="cert-item"><span class="cert-dot"></span>Pós-graduação em Cibersegurança Ofensiva</div>
+        <div class="cert-item"><span class="cert-dot"></span>Extensão em Tecnologias Avançadas — SENAI CIMATEC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- BIBLIOGRAFIA -->
+<div id="bibliografia" class="section-alt">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Referências</div>
+      <h2 class="section-title">Bibliografia</h2>
+      <p class="section-sub">Seleção de frameworks, normas e obras que fundamentam a produção intelectual do projeto Radix Cyber.</p>
+    </div>
+    <div class="biblio-grid">
+      <div class="biblio-item">
+        <div class="biblio-code">[BR-01] Defesa Nacional</div>
+        <div class="biblio-ref">E-Ciber — Estratégia Nacional de Cibersegurança. Decreto nº 12.573/2025. Presidência da República / GSI.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[BR-02] Defesa Nacional</div>
+        <div class="biblio-ref">PNCiber — Política Nacional de Cibersegurança. Decreto nº 11.856/2023. Presidência da República / GSI.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[FR-01] Framework Internacional</div>
+        <div class="biblio-ref">NIST AI Risk Management Framework (AI RMF 1.0). National Institute of Standards and Technology, 2023.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[FR-02] Framework Internacional</div>
+        <div class="biblio-ref">NIST Cybersecurity Framework 2.0 (CSF 2.0). National Institute of Standards and Technology, 2024.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[FR-03] Framework Internacional</div>
+        <div class="biblio-ref">ISO/IEC 27001:2022 — Information Security Management Systems. International Organization for Standardization.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[FR-04] IA &amp; Governança</div>
+        <div class="biblio-ref">EU Artificial Intelligence Act. Regulamento (UE) 2024/1689 do Parlamento Europeu e do Conselho.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[FR-05] IA &amp; Governança</div>
+        <div class="biblio-ref">NATO Principles of Responsible Use of Artificial Intelligence in Defence. NATO, 2021.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[LE-01] Legislação</div>
+        <div class="biblio-ref">Lei Geral de Proteção de Dados Pessoais — LGPD. Lei nº 13.709, de 14 de agosto de 2018.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[AC-01] Acadêmico</div>
+        <div class="biblio-ref">Endsley, M.R. (1995). Toward a theory of situation awareness in dynamic systems. <em>Human Factors</em>, 37(1), 32–64.</div>
+      </div>
+      <div class="biblio-item">
+        <div class="biblio-code">[AC-02] Acadêmico</div>
+        <div class="biblio-ref">Lima, C.M. (2022). Consciência Situacional Cibernética. Dissertação de mestrado, PPCA/UnB, Brasília.</div>
+      </div>
+    </div>
+    <p class="biblio-note">Esta bibliografia é revisada periodicamente à medida que novos documentos e frameworks são incorporados à produção do Radix Cyber. Última atualização: maio de 2026.</p>
+    <a href="assets/bibliografia-completa.pdf" class="biblio-download">↓ Baixar bibliografia completa (72 referências)</a>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- CONTATO -->
+<div id="contato" class="section">
+  <div class="section-header">
+    <div class="section-tag">Conexão</div>
+    <h2 class="section-title">Contato</h2>
+    <p class="section-sub">Para convites de palestra, colaborações acadêmicas ou troca de ideias.</p>
+  </div>
+  <div class="contato-grid">
+    <a href="https://www.linkedin.com/in/filipedesiqueira" target="_blank" class="contato-card">
+      <span class="contato-icon">💼</span>
+      <div class="contato-name">LinkedIn</div>
+      <div class="contato-handle">/in/filipedesiqueira</div>
+    </a>
+    <a class="contato-card" style="opacity:0.4; pointer-events:none; cursor:default;">
+      <span class="contato-icon">▶️</span>
+      <div class="contato-name">YouTube</div>
+      <div class="contato-handle">Em breve</div>
+    </a>
+    <a href="mailto:filipe@filipedesiqueira.com" class="contato-card">
+      <span class="contato-icon">✉️</span>
+      <div class="contato-name">E-mail</div>
+      <div class="contato-handle">Mensagem direta</div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <ul class="footer-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#infograficos">Infográficos</a></li>
+      <li><a href="#bibliografia">Bibliografia</a></li>
+    </ul>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
