@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Blog — Filipe de Siqueira. Produção autoral em cibersegurança, ética em IA e soberania digital.">
-<title>Blog — Filipe de Siqueira</title>
+<meta name="description" content="Infográficos — Filipe de Siqueira. Visualizações interativas sobre cibersegurança, IA e soberania digital.">
+<title>Infográficos — Filipe de Siqueira</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -63,21 +63,21 @@
 
   .results-info { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); padding: 1rem 0 0; }
 
-  .blog-list { display: flex; flex-direction: column; }
-  .blog-item {
-    display: grid; grid-template-columns: 120px 1fr auto;
-    gap: 2rem; align-items: start; padding: 2.2rem 0;
-    border-bottom: 1px solid var(--border); text-decoration: none;
-  }
-  .blog-item:hover .blog-title { color: var(--red); }
-  .blog-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-dim); padding-top: 0.2rem; line-height: 1.5; }
-  .blog-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--red); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
-  .blog-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 0.5rem; transition: color 0.2s; }
-  .blog-excerpt { font-size: 0.85rem; color: var(--text-mid); line-height: 1.65; }
-  .blog-arrow { color: var(--text-dim); font-size: 1rem; padding-top: 0.3rem; transition: color 0.2s, transform 0.2s; }
-  .blog-item:hover .blog-arrow { color: var(--red); transform: translateX(3px); }
+  .infog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding-top: 2rem; }
 
-  .empty-state { padding: 4rem 0; text-align: center; font-size: 0.85rem; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+  .infog-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-top: 3px solid var(--red); border-radius: 6px;
+    text-decoration: none; padding: 1.6rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .infog-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .infog-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem; color: var(--red); letter-spacing: 0.1em; text-transform: uppercase; }
+  .infog-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .infog-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+
+  .empty-state { padding: 4rem 0; text-align: center; font-size: 0.85rem; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; grid-column: 1 / -1; }
 
   .pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 2rem 0 0; }
   .pagination-info { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); }
@@ -107,8 +107,7 @@
     .page-header { padding: 3rem 1.5rem 2rem; }
     .page-title { font-size: 2rem; }
     .content { padding: 0 1.5rem 4rem; }
-    .blog-item { grid-template-columns: 1fr; gap: 0.4rem; }
-    .blog-date { display: none; }
+    .infog-grid { grid-template-columns: 1fr; }
     .controls { flex-direction: column; align-items: flex-start; }
   }
 </style>
@@ -119,17 +118,17 @@
   <a href="index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
   <ul class="nav-links">
     <li><a href="index.html#sobre">Sobre</a></li>
-    <li><a href="blog.html" class="active">Blog</a></li>
-    <li><a href="infograficos.html">Infográficos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="infograficos.html" class="active">Infográficos</a></li>
     <li><a href="index.html#bibliografia">Bibliografia</a></li>
     <li><a href="index.html#contato" class="nav-cta">Contato</a></li>
   </ul>
 </nav>
 
 <div class="page-header">
-  <div class="page-tag">Produção Autoral</div>
-  <h1 class="page-title">Blog</h1>
-  <p class="page-sub">Artigos publicados aqui primeiro. Versões resumidas no LinkedIn com link para o texto completo.</p>
+  <div class="page-tag">Visualizações</div>
+  <h1 class="page-title">Infográficos</h1>
+  <p class="page-sub">Materiais interativos em HTML sobre cibersegurança, ética em IA e soberania digital. Clique para abrir.</p>
 </div>
 
 <div class="content">
@@ -137,16 +136,16 @@
     <div class="filter-row" id="filterRow">
       <button class="filter-btn active" data-filter="todos">Todos</button>
       <button class="filter-btn" data-filter="automação">Automação</button>
-      <button class="filter-btn" data-filter="defesa cibernética">Defesa Cibernética</button>
+      <button class="filter-btn" data-filter="framework">Framework</button>
       <button class="filter-btn" data-filter="ia & governança">IA &amp; Governança</button>
-      <button class="filter-btn" data-filter="tríade edr">Tríade EDR</button>
+      <button class="filter-btn" data-filter="soberania">Soberania</button>
     </div>
     <div class="controls-right">
       <span class="control-label">Exibir</span>
       <select class="control-select" id="perPageSelect">
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="20">20</option>
+        <option value="6" selected>6</option>
+        <option value="12">12</option>
+        <option value="24">24</option>
       </select>
       <span class="control-label">Ordenar</span>
       <select class="control-select" id="sortSelect">
@@ -158,7 +157,7 @@
   </div>
 
   <div class="results-info" id="resultsInfo"></div>
-  <div class="blog-list" id="blogList"></div>
+  <div class="infog-grid" id="infogGrid"></div>
   <div class="pagination" id="pagination"></div>
 </div>
 
@@ -177,17 +176,30 @@
 
 <script>
   // ─── DADOS ───────────────────────────────────────────────────────────────────
-  // Para adicionar artigo: copie um objeto abaixo e preencha os campos.
-  const ARTIGOS = [
+  // Para adicionar infográfico: copie um objeto abaixo e preencha os campos.
+  const INFOGRAFICOS = [
+    {
+      data: "2026-03-01",
+      tags: ["Automação", "Maturidade"],
+      titulo: "O Dashboard Está Verde. Mas Alguém Entende o Processo?",
+      desc: "A ilusão de maturidade criada pela automação excessiva — quando os indicadores ficam verdes mas ninguém compreende o que está por trás deles.",
+      url: "infograficos/dashboard-verde.html"
+    },
+    {
+      data: "2026-03-15",
+      tags: ["Framework", "IA & Governança"],
+      titulo: "EDR — A Tríade que Falta no GRC",
+      desc: "Explicabilidade, Due Diligence Algorítmica e Responsabilização — extensão estrutural da Tríade CIA para o contexto de IA em cibersegurança.",
+      url: "infograficos/triade-edr.html"
+    },
     {
       data: "2026-04-01",
-      dataLabel: "ABR 2026",
-      tags: ["Automação", "Defesa Cibernética"],
-      titulo: "O Último Operador — Quando a automação extingue quem realmente sabe pensar",
-      excerpt: "Num jantar executivo no Security Leaders Brasília, a conversa foi além do protocolo. Fiz uma pergunta que estava me inquietando: até que ponto o excesso de automação está comprometendo o desenvolvimento dos nossos especialistas? A pergunta ficou na mesa.",
-      url: "artigos/o-ultimo-operador.html"
+      tags: ["Soberania", "Consciência Situacional"],
+      titulo: "Consciência Situacional e Soberania Cognitiva",
+      desc: "A capacidade nacional de preservar o julgamento humano como ativo estratégico — independente de plataformas, algoritmos ou infraestruturas de terceiros.",
+      url: "infograficos/soberania-cognitiva.html"
     }
-    // Adicione novos artigos aqui seguindo o mesmo padrão
+    // Adicione novos infográficos aqui seguindo o mesmo padrão
   ];
 
   let filtroAtivo = "todos";
@@ -196,9 +208,9 @@
   const sortOrder = () => document.getElementById("sortSelect").value;
 
   function filtrarOrdenar() {
-    let lista = [...ARTIGOS];
+    let lista = [...INFOGRAFICOS];
     if (filtroAtivo !== "todos") {
-      lista = lista.filter(a => a.tags.some(t => t.toLowerCase() === filtroAtivo));
+      lista = lista.filter(i => i.tags.some(t => t.toLowerCase() === filtroAtivo));
     }
     const ord = sortOrder();
     if (ord === "recente") lista.sort((a, b) => b.data.localeCompare(a.data));
@@ -217,21 +229,17 @@
 
     document.getElementById("resultsInfo").textContent = lista.length === 0
       ? ""
-      : `Exibindo ${inicio + 1}–${Math.min(inicio + pp, lista.length)} de ${lista.length} artigo${lista.length !== 1 ? "s" : ""}`;
+      : `Exibindo ${inicio + 1}–${Math.min(inicio + pp, lista.length)} de ${lista.length} infográfico${lista.length !== 1 ? "s" : ""}`;
 
-    const container = document.getElementById("blogList");
+    const container = document.getElementById("infogGrid");
     if (lista.length === 0) {
-      container.innerHTML = `<div class="empty-state">// nenhum artigo encontrado para este filtro</div>`;
+      container.innerHTML = `<div class="empty-state">// nenhum infográfico encontrado para este filtro</div>`;
     } else {
-      container.innerHTML = pagina.map(a => `
-        <a href="${a.url}" class="blog-item">
-          <div class="blog-date">${a.dataLabel}</div>
-          <div class="blog-content">
-            <div class="blog-tag">${a.tags.join(" · ")}</div>
-            <div class="blog-title">${a.titulo}</div>
-            <div class="blog-excerpt">${a.excerpt}</div>
-          </div>
-          <div class="blog-arrow">↗</div>
+      container.innerHTML = pagina.map(i => `
+        <a href="${i.url}" class="infog-card">
+          <div class="infog-tag">${i.tags.join(" · ")}</div>
+          <div class="infog-title">${i.titulo}</div>
+          <div class="infog-desc">${i.desc}</div>
         </a>
       `).join("");
     }
