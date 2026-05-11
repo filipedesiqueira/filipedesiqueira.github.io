@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Blog — Filipe de Siqueira. Produção autoral em cibersegurança, ética em IA e soberania digital.">
+<title>Blog — Filipe de Siqueira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6;
+    --bg-alt: #f1ede8;
+    --bg-dark: #111318;
+    --red: #c8342a;
+    --red-light: #f5ece9;
+    --blue: #1a3a6b;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-dim: #888;
+    --border: #e2ddd7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--red); letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text-mid); text-decoration: none; transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red) !important; color: white !important;
+    padding: 0.4rem 1.1rem; border-radius: 3px;
+    font-size: 0.8rem !important; transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  .page-header {
+    max-width: 1100px; margin: 0 auto;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+    color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif; font-size: 2.8rem;
+    font-weight: 900; color: var(--text); line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+
+  .page-sub {
+    font-size: 0.95rem; color: var(--text-mid); max-width: 560px;
+  }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem 5rem; }
+
+  .filter-row {
+    display: flex; gap: 0.6rem; flex-wrap: wrap;
+    padding: 2rem 0; border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .filter-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.3rem 0.8rem; border-radius: 2px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-dim); cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--red); color: white; border-color: var(--red);
+  }
+
+  .blog-list { display: flex; flex-direction: column; }
+
+  .blog-item {
+    display: grid; grid-template-columns: 120px 1fr auto;
+    gap: 2rem; align-items: start; padding: 2.2rem 0;
+    border-bottom: 1px solid var(--border); text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .blog-item:hover .blog-title { color: var(--red); }
+
+  .blog-date {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    color: var(--text-dim); padding-top: 0.2rem; line-height: 1.5;
+  }
+
+  .blog-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    color: var(--red); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .blog-title {
+    font-family: 'Playfair Display', serif; font-size: 1.15rem;
+    font-weight: 700; color: var(--text); line-height: 1.35;
+    margin-bottom: 0.5rem; transition: color 0.2s;
+  }
+
+  .blog-excerpt { font-size: 0.85rem; color: var(--text-mid); line-height: 1.65; }
+
+  .blog-arrow {
+    color: var(--text-dim); font-size: 1rem; padding-top: 0.3rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .blog-item:hover .blog-arrow { color: var(--red); transform: translateX(3px); }
+
+  .empty-state {
+    padding: 4rem 0; text-align: center;
+    font-size: 0.9rem; color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a { font-size: 0.78rem; color: #6a7a8a; text-decoration: none; transition: color 0.2s; }
+
+  .footer-links a:hover { color: #f2f2f2; }
+
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links li:nth-child(n+4) { display: none; }
+    .page-header { padding: 3rem 1.5rem 2rem; }
+    .page-title { font-size: 2rem; }
+    .content { padding: 0 1.5rem 4rem; }
+    .blog-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    .blog-date { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <ul class="nav-links">
+    <li><a href="index.html#sobre">Sobre</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="infograficos.html">Infográficos</a></li>
+    <li><a href="index.html#bibliografia">Bibliografia</a></li>
+    <li><a href="index.html#contato" class="nav-cta">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-tag">Produção Autoral</div>
+  <h1 class="page-title">Blog</h1>
+  <p class="page-sub">Artigos publicados aqui primeiro. Versões resumidas no LinkedIn com link para o texto completo.</p>
+</div>
+
+<div class="content">
+  <div class="filter-row">
+    <button class="filter-btn active">Todos</button>
+    <button class="filter-btn">Automação</button>
+    <button class="filter-btn">Defesa Cibernética</button>
+    <button class="filter-btn">IA & Governança</button>
+    <button class="filter-btn">Tríade EDR</button>
+  </div>
+
+  <div class="blog-list">
+
+    <a href="artigos/o-ultimo-operador.html" class="blog-item">
+      <div class="blog-date">ABR 2026</div>
+      <div class="blog-content">
+        <div class="blog-tag">Automação · Defesa Cibernética</div>
+        <div class="blog-title">O Último Operador — Quando a automação extingue quem realmente sabe pensar</div>
+        <div class="blog-excerpt">Num jantar executivo no Security Leaders Brasília, a conversa foi além do protocolo. Fiz uma pergunta que estava me inquietando: até que ponto o excesso de automação está comprometendo o desenvolvimento dos nossos especialistas? A pergunta ficou na mesa.</div>
+      </div>
+      <div class="blog-arrow">↗</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <ul class="footer-links">
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="infograficos.html">Infográficos</a></li>
+      <li><a href="index.html#bibliografia">Bibliografia</a></li>
+    </ul>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

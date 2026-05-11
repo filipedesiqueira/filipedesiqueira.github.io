@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Infográficos — Filipe de Siqueira. Visualizações interativas sobre cibersegurança, IA e soberania digital.">
+<title>Infográficos — Filipe de Siqueira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6;
+    --bg-alt: #f1ede8;
+    --bg-dark: #111318;
+    --red: #c8342a;
+    --red-light: #f5ece9;
+    --blue: #1a3a6b;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-dim: #888;
+    --border: #e2ddd7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--red); letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text-mid); text-decoration: none; transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red) !important; color: white !important;
+    padding: 0.4rem 1.1rem; border-radius: 3px;
+    font-size: 0.8rem !important; transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  .page-header {
+    max-width: 1100px; margin: 0 auto;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+    color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif; font-size: 2.8rem;
+    font-weight: 900; color: var(--text); line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+
+  .page-sub {
+    font-size: 0.95rem; color: var(--text-mid); max-width: 560px;
+  }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+
+  .infog-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+
+  .infog-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-top: 3px solid var(--red); border-radius: 6px; text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex; flex-direction: column; padding: 1.6rem;
+  }
+
+  .infog-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .infog-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.63rem;
+    color: var(--red); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .infog-title {
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    font-weight: 700; color: var(--text); line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .infog-desc {
+    font-size: 0.82rem; color: var(--text-mid); line-height: 1.6;
+  }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a { font-size: 0.78rem; color: #6a7a8a; text-decoration: none; transition: color 0.2s; }
+
+  .footer-links a:hover { color: #f2f2f2; }
+
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links li:nth-child(n+4) { display: none; }
+    .page-header { padding: 3rem 1.5rem 2rem; }
+    .page-title { font-size: 2rem; }
+    .content { padding: 2rem 1.5rem 4rem; }
+    .infog-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <ul class="nav-links">
+    <li><a href="index.html#sobre">Sobre</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="infograficos.html" class="active">Infográficos</a></li>
+    <li><a href="index.html#bibliografia">Bibliografia</a></li>
+    <li><a href="index.html#contato" class="nav-cta">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-tag">Visualizações</div>
+  <h1 class="page-title">Infográficos</h1>
+  <p class="page-sub">Materiais interativos em HTML sobre cibersegurança, ética em IA e soberania digital. Clique para abrir.</p>
+</div>
+
+<div class="content">
+  <div class="infog-grid">
+
+    <a href="infograficos/dashboard-verde.html" class="infog-card">
+      <div class="infog-tag">Automação · Maturidade</div>
+      <div class="infog-title">O Dashboard Está Verde. Mas Alguém Entende o Processo?</div>
+      <div class="infog-desc">A ilusão de maturidade criada pela automação excessiva — quando os indicadores ficam verdes mas ninguém compreende o que está por trás deles.</div>
+    </a>
+
+    <a href="infograficos/triade-edr.html" class="infog-card">
+      <div class="infog-tag">Framework · IA &amp; Governança</div>
+      <div class="infog-title">EDR — A Tríade que Falta no GRC</div>
+      <div class="infog-desc">Explicabilidade, Due Diligence Algorítmica e Responsabilização — extensão estrutural da Tríade CIA para o contexto de IA em cibersegurança.</div>
+    </a>
+
+    <a href="infograficos/soberania-cognitiva.html" class="infog-card">
+      <div class="infog-tag">Soberania · Consciência Situacional</div>
+      <div class="infog-title">Consciência Situacional e Soberania Cognitiva</div>
+      <div class="infog-desc">A capacidade nacional de preservar o julgamento humano como ativo estratégico — independente de plataformas, algoritmos ou infraestruturas de terceiros.</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <ul class="footer-links">
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="infograficos.html">Infográficos</a></li>
+      <li><a href="index.html#bibliografia">Bibliografia</a></li>
+    </ul>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
