@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Dashboard Ficou Verde. E daí? — Radix Cyber</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#02040a;--card:#0a1018;--card2:#0d1520;
+  --red:#ff3b30;--blue:#4a7aff;--green:#30d158;--amber:#ffd60a;
+  --text:#f2f2f2;--dim:#8a9bb0;--dim2:#3a4a5a;
+  --border:#1a2a3a;--border2:#0d1828;
+}
+html,body{width:100%;min-height:100vh}
+body{background:#050810;display:flex;flex-direction:column;align-items:center;font-family:'IBM Plex Sans',sans-serif;color:var(--text);padding:12px 0 20px}
+.wrap{width:min(600px,100vw);position:relative}
+
+/* ── SLIDE BASE ── */
+.slide{width:min(600px,100vw);min-height:min(600px,100vw);background:var(--bg);position:relative;overflow:hidden;display:none;flex-direction:column}
+.slide.active{display:flex}
+.slide::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(30,80,200,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(30,80,200,.04) 1px,transparent 1px);background-size:32px 32px;animation:gD 25s linear infinite;pointer-events:none;z-index:0}
+@keyframes gD{from{background-position:0 0}to{background-position:32px 32px}}
+.slide::after{content:'';position:absolute;left:0;right:0;height:70px;background:linear-gradient(180deg,transparent,rgba(74,122,255,.06) 50%,transparent);animation:sc 8s linear infinite;pointer-events:none;z-index:1}
+@keyframes sc{from{top:-70px}to{top:110vw}}
+.lb{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--red),transparent);z-index:10}
+.tl{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);z-index:10}
+.slide>*{position:relative;z-index:5}.lb,.tl{z-index:10}
+.gr{position:absolute;border-radius:50%;pointer-events:none}
+.gr.r{background:radial-gradient(circle,rgba(255,59,48,.12) 0%,transparent 70%)}
+.gr.b{background:radial-gradient(circle,rgba(74,122,255,.08) 0%,transparent 70%)}
+
+/* ── HEADER / FOOTER ── */
+.sh{display:flex;justify-content:space-between;align-items:center;padding:clamp(8px,2.5vw,13px) clamp(12px,3.5vw,20px) clamp(6px,2vw,10px);border-bottom:1px solid var(--border2)}
+.brand{font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,2.5vw,11px);font-weight:700;letter-spacing:2px}
+.brand .r{color:var(--red)}.brand .c{color:var(--blue)}
+.htag{font-family:'IBM Plex Mono',monospace;font-size:clamp(5.5px,1.5vw,8px);color:var(--dim2);letter-spacing:1px}
+.hcnt{font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2vw,10px);color:var(--dim2)}
+.sf{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding:clamp(6px,2vw,9px) clamp(12px,3.5vw,20px) clamp(8px,2.5vw,12px);border-top:1px solid var(--border2)}
+.fn{font-family:'IBM Plex Mono',monospace;font-size:clamp(5.5px,1.5vw,8px);color:var(--dim)}
+.ft{font-family:'IBM Plex Mono',monospace;font-size:clamp(5.5px,1.5vw,8px);color:var(--blue);animation:tC 4s infinite}
+@keyframes tC{0%,49%{color:var(--blue)}50%,100%{color:var(--red)}}
+
+/* ── EYEBROW ── */
+.ey{font-family:'IBM Plex Mono',monospace;font-size:clamp(6px,1.7vw,8px);color:var(--blue);letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:5px;margin-bottom:clamp(4px,1.4vw,8px)}
+.ey::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%;box-shadow:0 0 6px var(--red);animation:db 1.5s infinite;flex-shrink:0}
+@keyframes db{0%,100%{opacity:1}50%{opacity:.3}}
+.ey.red{color:var(--red)}.ey.amber{color:var(--amber)}
+
+/* ── BIG TITLE ── */
+.bt{font-size:clamp(22px,6.2vw,38px);font-weight:900;color:var(--text);line-height:1.1;margin-bottom:5px}
+.bt .ac{color:var(--blue)}.bt .re{color:var(--red)}.bt .am{color:var(--amber)}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:clamp(9px,2.5vw,13px) clamp(10px,2.8vw,14px);position:relative;overflow:hidden}
+.card.rl{border-left:3px solid var(--red)}.card.bl{border-left:3px solid var(--blue)}.card.al{border-left:3px solid var(--amber)}
+
+/* ── NUMBERED LIST ── */
+.nlist{display:flex;flex-direction:column;gap:clamp(6px,1.8vw,9px)}
+.ni{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:clamp(9px,2.5vw,12px) clamp(10px,2.8vw,14px);display:flex;gap:clamp(8px,2.3vw,12px);align-items:flex-start}
+.nn{font-family:'IBM Plex Mono',monospace;font-size:clamp(14px,4vw,22px);font-weight:700;color:var(--red);flex-shrink:0;line-height:1;opacity:.7}
+.nt{font-size:clamp(9px,2.5vw,12px);color:var(--text);line-height:1.45}
+.nt strong{color:var(--text);font-weight:700}
+.nd{font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.8vw,9.5px);color:var(--dim);line-height:1.5;margin-top:3px}
+
+/* ── LEVEL CARD ── */
+.lvl{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:clamp(9px,2.5vw,14px) clamp(10px,2.8vw,16px);display:flex;gap:clamp(8px,2.3vw,14px);align-items:center}
+.lvl-tag{font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2.2vw,11px);font-weight:700;letter-spacing:1px;flex-shrink:0;width:clamp(54px,14vw,80px)}
+.lvl-div{width:1px;background:var(--border);align-self:stretch;flex-shrink:0}
+.lvl-body{}
+.lvl-title{font-size:clamp(10px,2.8vw,13px);font-weight:700;color:var(--text);margin-bottom:3px}
+.lvl-desc{font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.8vw,9.5px);color:var(--dim);line-height:1.45}
+
+/* ── COMPARE GRID ── */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.8vw,9px)}
+.cmp-card{background:var(--card);border:1px solid var(--border);border-radius:2px;padding:clamp(9px,2.5vw,14px) clamp(9px,2.5vw,13px)}
+.cmp-card.old{border-color:rgba(138,155,176,.2)}
+.cmp-card.now{border-color:rgba(255,59,48,.3);background:rgba(255,59,48,.05)}
+.cmp-era{font-family:'IBM Plex Mono',monospace;font-size:clamp(5.5px,1.4vw,7.5px);color:var(--dim2);letter-spacing:2px;margin-bottom:6px}
+.cmp-title{font-size:clamp(12px,3.3vw,16px);font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.2}
+.cmp-item{font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.8vw,9px);color:var(--dim);line-height:1.6;padding-left:10px;position:relative}
+.cmp-item::before{content:'—';position:absolute;left:0;color:var(--red)}
+
+/* ── QUOTE BLOCK ── */
+.qblock{background:rgba(255,59,48,.06);border:1px solid rgba(255,59,48,.2);border-left:3px solid var(--red);border-radius:2px;padding:clamp(9px,2.5vw,13px) clamp(10px,2.8vw,14px)}
+.qtext{font-size:clamp(9px,2.4vw,12px);color:var(--dim);font-style:italic;line-height:1.55}
+.qtext strong{color:var(--text);font-style:normal}
+
+/* ════════════════════════
+   S1 — CAPA
+════════════════════════ */
+.s1bg{position:absolute;inset:0;background:url('./assets/cover_operador.jpg') center/cover;opacity:.4;z-index:1}
+.s1ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,4,10,.3) 0%,rgba(2,4,10,.5) 40%,rgba(2,4,10,.96) 100%);z-index:2}
+.s1c{position:relative;z-index:5;padding:clamp(12px,3.5vw,18px) clamp(14px,4vw,24px) 0;flex:1;display:flex;flex-direction:column}
+.s1hr{display:flex;justify-content:space-between;align-items:flex-start}
+.s1t{margin-top:auto;padding-bottom:clamp(12px,3.5vw,22px);padding-top:clamp(100px,32vw,200px)}
+.s1t1{font-size:clamp(26px,7.5vw,46px);font-weight:900;color:var(--text);line-height:1;letter-spacing:-1px}
+.s1t2{font-size:clamp(26px,7.5vw,46px);font-weight:900;color:var(--red);line-height:1;letter-spacing:-1px}
+.s1t3{font-size:clamp(26px,7.5vw,46px);font-weight:900;color:var(--text);line-height:1;letter-spacing:-1px}
+.s1sub{font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,2vw,10px);color:var(--dim);margin-top:8px;letter-spacing:.5px}
+.s1f{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:clamp(6px,2vw,9px) clamp(14px,4vw,24px) clamp(9px,2.5vw,14px);border-top:1px solid rgba(26,42,58,.6)}
+.s1name{font-size:clamp(9px,2.5vw,12px);font-weight:700;color:var(--text);letter-spacing:.5px;font-family:'IBM Plex Sans',sans-serif}
+.s1role{font-family:'IBM Plex Mono',monospace;font-size:clamp(5.5px,1.5vw,8px);color:var(--dim);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══ S1 CAPA ══ -->
+<div class="slide active" id="s1">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr r" style="width:60%;height:60%;top:-15%;right:-10%"></div>
+  <div class="s1bg"></div><div class="s1ov"></div>
+  <div class="s1c">
+    <div class="s1hr">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.8vw,9px);color:var(--blue);letter-spacing:2px;display:flex;align-items:center;gap:6px">
+          <span style="width:6px;height:6px;background:var(--red);border-radius:50%;box-shadow:0 0 6px var(--red);display:inline-block;animation:db 1.5s infinite"></span>
+          // CIBERSEGURANÇA · IA · FORMAÇÃO
+        </div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2vw,9px);color:var(--dim2)">01 / 07</div>
+    </div>
+    <div class="s1t">
+      <div class="s1t1">O dashboard está verde.</div>
+      <div class="s1t2">Mas alguém aqui</div>
+      <div class="s1t3">entende o processo?</div>
+      <div class="s1sub">// CIBERSEGURANÇA · IA · FORMAÇÃO</div>
+    </div>
+  </div>
+  <div class="s1f">
+    <div>
+      <div class="s1name">FILIPE SIQUEIRA</div>
+      <div class="s1role">DEPUTY CISO · COMDCIBER · MAJOR DO EXÉRCITO BRASILEIRO</div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2vw,10px);color:var(--red);font-weight:700;letter-spacing:1.5px">RADIX CYBER</div>
+  </div>
+</div>
+
+<!-- ══ S2 O PROBLEMA INVISÍVEL ══ -->
+<div class="slide" id="s2">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr r" style="width:40%;height:40%;top:-8%;right:-6%"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">02 / 07</div></div>
+  <div style="padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,20px) 0;flex:1;display:flex;flex-direction:column;gap:clamp(8px,2.3vw,12px)">
+    <div>
+      <div class="ey red">O PROBLEMA INVISÍVEL</div>
+      <div class="bt">O Dashboard<br><span class="re">Ficou Verde.</span><br>E daí?</div>
+    </div>
+    <div style="font-size:clamp(10px,2.7vw,13px);color:var(--dim);line-height:1.6">
+      Quando o pentest é automatizado, as vulnerabilidades identificadas por plataformas e as correções implementadas sem que o operador precise compreender o porquê — cria-se um problema silencioso.
+    </div>
+    <div class="qblock">
+      <div class="qtext">O profissional que <strong>assina o relatório</strong> nunca precisou entender o que está por baixo. Os processos rodam. Os números fecham. <strong>Mas o risco real permanece invisível.</strong></div>
+    </div>
+  </div>
+  <div class="sf"><div class="fn">Filipe Siqueira · Deputy CISO ComDCiber · Exército Brasileiro</div><div class="ft">#RadixCyber</div></div>
+</div>
+
+<!-- ══ S3 TRÊS NÍVEIS ══ -->
+<div class="slide" id="s3">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr b" style="width:38%;height:38%;top:-8%;left:-6%"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">03 / 07</div></div>
+  <div style="padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,20px) 0;flex:1;display:flex;flex-direction:column;gap:clamp(8px,2.3vw,11px)">
+    <div>
+      <div class="ey">O COMPROMETIMENTO É SISTÊMICO</div>
+      <div class="bt">Três Níveis.<br><span class="re">Um Problema.</span></div>
+    </div>
+    <div class="nlist">
+      <div class="lvl">
+        <div class="lvl-tag" style="color:var(--blue)">TÁTICO</div>
+        <div class="lvl-div"></div>
+        <div class="lvl-body">
+          <div class="lvl-title">Analista <strong>executa</strong> sem compreender</div>
+          <div class="lvl-desc">Ferramenta faz o reconhecimento. Ele clica e assina.</div>
+        </div>
+      </div>
+      <div class="lvl">
+        <div class="lvl-tag" style="color:rgba(74,122,255,.6)">OPERAC.</div>
+        <div class="lvl-div"></div>
+        <div class="lvl-body">
+          <div class="lvl-title">Gestor <strong>interpreta</strong> sem questionar</div>
+          <div class="lvl-desc">Dashboard verde significa tudo certo — ou significa que ninguém entende?</div>
+        </div>
+      </div>
+      <div class="lvl" style="border-left:3px solid var(--red)">
+        <div class="lvl-tag" style="color:var(--red)">ESTRAT.</div>
+        <div class="lvl-div"></div>
+        <div class="lvl-body">
+          <div class="lvl-title">CISO <strong>decide</strong> sem rastreabilidade</div>
+          <div class="lvl-desc">Decisões estratégicas baseadas em outputs que ninguém consegue auditar criticamente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><div class="fn">Filipe Siqueira · Deputy CISO ComDCiber · Exército Brasileiro</div><div class="ft">#RadixCyber</div></div>
+</div>
+
+<!-- ══ S4 ERRO DO COBOL ══ -->
+<div class="slide" id="s4">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">04 / 07</div></div>
+  <div style="padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,20px) 0;flex:1;display:flex;flex-direction:column;gap:clamp(8px,2.3vw,11px)">
+    <div>
+      <div class="ey amber">A ANALOGIA QUE NINGUÉM QUER OUVIR</div>
+      <div class="bt">O Erro do <span class="am">COBOL</span><br>Se Repete</div>
+    </div>
+    <div class="cmp">
+      <div class="cmp-card old">
+        <div class="cmp-era">ANOS 1980–2000</div>
+        <div class="cmp-title">Programador COBOL</div>
+        <div class="cmp-item">Parou de ser formado</div>
+        <div class="cmp-item">Virou escasso</div>
+        <div class="cmp-item">Tornou-se insubstituível</div>
+        <div class="cmp-item">Já era tarde quando percebemos</div>
+      </div>
+      <div class="cmp-card now">
+        <div class="cmp-era" style="color:var(--red)">HOJE · IA · AUTOMAÇÃO</div>
+        <div class="cmp-title">Operador Cyber</div>
+        <div class="cmp-item">Está sendo formado para usar ferramentas</div>
+        <div class="cmp-item">Não aprende o processo</div>
+        <div class="cmp-item">Quando falhar — quem saberá consertar?</div>
+        <div class="cmp-item">Estamos percebendo a tempo?</div>
+      </div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:2px;padding:clamp(8px,2.3vw,12px) clamp(10px,2.8vw,14px);position:relative">
+      <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:20px;height:20px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:#fff">!</div>
+      <div style="font-size:clamp(9px,2.5vw,12px);color:var(--text);font-weight:600;text-align:center;line-height:1.4">Quando percebemos que paramos de formar quem pensa do zero — já era tarde</div>
+    </div>
+  </div>
+  <div class="sf"><div class="fn">Filipe Siqueira · Deputy CISO ComDCiber · Exército Brasileiro</div><div class="ft">#RadixCyber</div></div>
+</div>
+
+<!-- ══ S5 SOBERANIA ══ -->
+<div class="slide" id="s5">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr r" style="width:35%;height:35%;bottom:-5%;right:-5%"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">05 / 07</div></div>
+  <div style="padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,20px) 0;flex:1;display:flex;flex-direction:column;gap:clamp(8px,2.3vw,11px)">
+    <div>
+      <div class="ey">ALÉM DA TÉCNICA</div>
+      <div class="bt">Isso É Uma<br>Questão de<br><span class="re">Soberania</span></div>
+    </div>
+    <div class="nlist">
+      <div class="ni">
+        <div class="nn">01</div>
+        <div class="nt">Ferramenta desenvolvida por terceiros embarca <strong>valores e premissas</strong> de quem a criou</div>
+      </div>
+      <div class="ni">
+        <div class="nn">02</div>
+        <div class="nt">Operador que não entende o processo <strong>não consegue auditar</strong> essas premissas</div>
+      </div>
+      <div class="ni">
+        <div class="nn">03</div>
+        <div class="nt">País que forma apenas consumidores de ferramentas <strong>transfere sua soberania cognitiva</strong> para quem as desenvolveu</div>
+      </div>
+    </div>
+    <div class="qblock">
+      <div class="qtext">A dependência tecnológica começa muito antes da infraestrutura. <strong>Começa na formação.</strong></div>
+    </div>
+  </div>
+  <div class="sf"><div class="fn">Filipe Siqueira · Deputy CISO ComDCiber · Exército Brasileiro</div><div class="ft">#RadixCyber</div></div>
+</div>
+
+<!-- ══ S6 A RESPOSTA ══ -->
+<div class="slide" id="s6">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr b" style="width:40%;height:40%;top:-8%;right:-6%"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">06 / 07</div></div>
+  <div style="padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,20px) 0;flex:1;display:flex;flex-direction:column;gap:clamp(8px,2.3vw,11px)">
+    <div>
+      <div class="ey">O CAMINHO</div>
+      <div class="bt">A Resposta<br>Não É Rejeitar<br><span class="ac">a Automação</span></div>
+    </div>
+    <div class="nlist">
+      <div class="ni">
+        <div class="nn" style="color:var(--red)">01</div>
+        <div>
+          <div class="nt"><strong>A base vem primeiro.</strong> Formar o operador que entende o processo antes de automatizá-lo.</div>
+        </div>
+      </div>
+      <div class="ni">
+        <div class="nn" style="color:var(--red)">02</div>
+        <div>
+          <div class="nt"><strong>Currículos que exigem fundamento.</strong> Certificações que valorizam domínio do processo, não apenas uso da ferramenta.</div>
+        </div>
+      </div>
+      <div class="ni">
+        <div class="nn" style="color:var(--red)">03</div>
+        <div>
+          <div class="nt"><strong>Decisões rastreáveis.</strong> GRC que mapeie não só falhas técnicas, mas falhas de formação disfarçadas de eficiência.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><div class="fn">Filipe Siqueira · Deputy CISO ComDCiber · Exército Brasileiro</div><div class="ft">#RadixCyber</div></div>
+</div>
+
+<!-- ══ S7 CTA ══ -->
+<div class="slide" id="s7">
+  <div class="lb"></div><div class="tl"></div>
+  <div class="gr r" style="width:50%;height:50%;bottom:-5%;left:-5%"></div>
+  <div class="gr b" style="width:45%;height:45%;top:-8%;right:-8%"></div>
+  <div class="sh"><div class="brand"><span class="r">RADIX</span> <span class="c">CYBER</span></div><div class="hcnt">07 / 07</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(12px,3.5vw,20px) clamp(14px,4vw,24px);gap:clamp(14px,4vw,22px)">
+    <div>
+      <div class="ey">A PERGUNTA QUE PRECISA FICAR NA MESA</div>
+      <div style="font-size:clamp(26px,7.5vw,44px);font-weight:900;color:var(--text);line-height:1.1;letter-spacing:-.5px">
+        O Brasil Está<br>Formando<br><span style="color:var(--red)">Quem Pensa</span><br>do Zero?
+      </div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,2.5vw,12px);color:var(--dim);line-height:1.6">
+      Deixe sua visão nos comentários.<br>Esse debate precisa continuar.
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.8vw,9px);color:var(--dim2)">
+      #CyberSecurity &nbsp;#GRC &nbsp;#CISO &nbsp;#FormacaoTecnica &nbsp;#RadixCyber
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--border2);padding:clamp(10px,3vw,14px) clamp(14px,4vw,24px) clamp(12px,3.5vw,16px);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:5">
+    <div>
+      <div style="font-family:'IBM Plex Sans',sans-serif;font-size:clamp(12px,3.3vw,16px);font-weight:700;color:var(--text)">Filipe Siqueira</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(6px,1.6vw,8.5px);color:var(--dim);margin-top:2px">Deputy CISO · ComDCiber · Major do Exército Brasileiro</div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,2.5vw,11px);font-weight:700;letter-spacing:2px">
+      <span style="color:var(--red)">Radix</span> <span style="color:var(--blue)">Cyber</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- NAV -->
+<div style="width:min(600px,100vw);display:flex;align-items:center;justify-content:space-between;padding:clamp(9px,2.8vw,13px) clamp(8px,2.5vw,16px);gap:8px">
+  <button id="bp" onclick="go(-1)" disabled style="background:var(--card);border:1px solid var(--border);color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2.3vw,11px);padding:clamp(6px,1.8vw,8px) clamp(10px,3vw,20px);cursor:pointer;transition:all .2s;letter-spacing:1px;flex-shrink:0;-webkit-tap-highlight-color:transparent">← PREV</button>
+  <div id="dots" style="display:flex;gap:clamp(5px,1.5vw,7px);align-items:center;flex:1;justify-content:center"></div>
+  <button id="bn" onclick="go(1)" style="background:var(--card);border:1px solid var(--border);color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:clamp(8px,2.3vw,11px);padding:clamp(6px,1.8vw,8px) clamp(10px,3vw,20px);cursor:pointer;transition:all .2s;letter-spacing:1px;flex-shrink:0;-webkit-tap-highlight-color:transparent">NEXT →</button>
+</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:clamp(7px,1.7vw,9px);color:var(--dim2);text-align:center;padding:0 8px">Radix Cyber · Filipe Siqueira · swipe ou use os botões</div>
+
+<style>
+#bp:hover:not(:disabled),#bp:active:not(:disabled),#bn:hover:not(:disabled),#bn:active:not(:disabled){border-color:var(--blue)!important;color:var(--blue)!important}
+#bp:disabled,#bn:disabled{opacity:.3;cursor:default}
+.ndot{width:clamp(6px,1.8vw,8px);height:clamp(6px,1.8vw,8px);border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:1px solid var(--border);-webkit-tap-highlight-color:transparent}
+.ndot.on{background:var(--red)!important;border-color:var(--red)!important;box-shadow:0 0 6px rgba(255,59,48,.5)}
+</style>
+
+<script>
+const N=7;let cur=1;
+const dd=document.getElementById('dots');
+for(let i=1;i<=N;i++){const d=document.createElement('div');d.className='ndot'+(i===1?' on':'');d.onclick=()=>show(i);dd.appendChild(d)}
+function show(n){
+  document.getElementById('s'+cur).classList.remove('active');
+  dd.children[cur-1].classList.remove('on');
+  cur=n;
+  document.getElementById('s'+cur).classList.add('active');
+  dd.children[cur-1].classList.add('on');
+  document.getElementById('bp').disabled=cur===1;
+  document.getElementById('bn').disabled=cur===N;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(d){if(cur+d>=1&&cur+d<=N)show(cur+d)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+let tx=0;
+document.querySelector('.wrap').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.querySelector('.wrap').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)go(dx<0?1:-1)},{passive:true});
+</script>
+</body>
+</html>
