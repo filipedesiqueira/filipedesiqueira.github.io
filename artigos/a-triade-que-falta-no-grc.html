@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Tríade EDR — Explicabilidade, Due Diligence Algorítmica e Responsabilização. Uma complementação à CIA para o contexto de IA em cibersegurança. Por Filipe de Siqueira.">
+<title>A Tríade que Falta no GRC — Filipe de Siqueira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6;
+    --bg-alt: #f1ede8;
+    --bg-dark: #111318;
+    --red: #c8342a;
+    --red-light: #f5ece9;
+    --blue: #1a3a6b;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-dim: #888;
+    --border: #e2ddd7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--red); letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-back {
+    font-size: 0.82rem; color: var(--text-mid);
+    text-decoration: none; display: flex;
+    align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--red); }
+
+  .article-hero {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2.5rem 4rem;
+  }
+
+  .article-hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .article-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--red);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .article-tag::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--red);
+  }
+
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--text); margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .article-meta {
+    display: flex; align-items: center;
+    gap: 1.5rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .article-author {
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+
+  .author-photo {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--text); line-height: 1.2;
+  }
+
+  .author-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  .article-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  .article-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+  }
+
+  .article-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 1.6rem;
+  }
+
+  .article-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--text); line-height: 1.25;
+    margin-top: 3rem; margin-bottom: 1.2rem;
+  }
+
+  .article-body strong { color: var(--text); font-weight: 600; }
+
+  .article-body blockquote {
+    border-left: 3px solid var(--red);
+    padding: 0.8rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--red-light);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article-body blockquote p {
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  /* Tabela comparativa CIA vs EDR */
+  .comparison-table {
+    width: 100%; border-collapse: collapse;
+    margin: 2.5rem 0; font-size: 0.9rem;
+  }
+
+  .comparison-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.8rem 1.2rem;
+    text-align: left; border-bottom: 2px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .comparison-table th:last-child { color: var(--red); }
+
+  .comparison-table td {
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-mid); line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  .comparison-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--text); width: 30%;
+  }
+
+  .comparison-table tr:hover td { background: var(--bg-alt); }
+
+  /* Cards dos pilares EDR */
+  .edr-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 1rem; margin: 2.5rem 0;
+  }
+
+  .edr-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 1.6rem 1.8rem;
+  }
+
+  .edr-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900;
+    color: var(--red); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .edr-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; color: var(--blue);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .edr-desc {
+    font-size: 0.9rem; color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  .engagement {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 1.8rem 2rem;
+    margin: 3rem 0;
+  }
+
+  .engagement p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem !important;
+    font-weight: 700;
+    color: var(--text) !important;
+    font-style: normal !important;
+    margin-bottom: 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  .article-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .article-tag-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--blue);
+    background: var(--bg-alt);
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .article-cta {
+    max-width: 720px; margin: 0 auto;
+    padding: 0 2.5rem 4rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-outline {
+    border: 1.5px solid var(--border); color: var(--text-mid);
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 500;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--text-mid); color: var(--text); }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .article-hero { padding: 3rem 1.5rem 2.5rem; }
+    .article-body { padding: 2.5rem 1.5rem 4rem; }
+    .article-cta { padding: 0 1.5rem 3rem; }
+    .article-date { margin-left: 0; }
+    .comparison-table { font-size: 0.8rem; }
+    .comparison-table td, .comparison-table th { padding: 0.7rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <a href="../blog.html" class="nav-back">← Voltar ao Blog</a>
+</nav>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-tag">IA &amp; Governança · Framework · Tríade EDR</div>
+    <h1 class="article-title">A Tríade que Falta no GRC</h1>
+    <div class="article-meta">
+      <div class="article-author">
+        <div class="author-photo">FS</div>
+        <div class="author-info">
+          <div class="author-name">Filipe de Siqueira</div>
+          <div class="author-role">CEH · CPTE · CNSE · CSAE · Projeto Radix Cyber</div>
+        </div>
+      </div>
+      <div class="article-date">Maio de 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- CORPO -->
+<div class="article-body">
+
+  <p>Há algumas semanas publiquei uma pergunta simples: as decisões estratégicas permanecem sob controle humano — ou estamos apenas confiando em outputs automatizados sem rastreabilidade?</p>
+
+  <p>A resposta que recebi de Cecy Mitie Furusawa me fez parar.</p>
+
+  <blockquote>
+    <p>"Sem explicabilidade não há governança, sem governança não há autonomia e, sem autonomia, não há soberania."</p>
+  </blockquote>
+
+  <p>Uma frase. Três camadas. E o esboço completo de algo que eu já estava tentando articular — uma visão jurídica chegando antes que eu conseguisse fechar o argumento técnico. Comecei a desenhar.</p>
+
+  <h2>O que a Tríade CIA não cobre</h2>
+
+  <p>A Tríade CIA — <strong>Confidencialidade, Integridade e Disponibilidade</strong> — é o alicerce da segurança da informação há décadas. Está no ISO 27001, no NIST, no COBIT. É ensinada no primeiro dia de qualquer curso de cibersegurança.</p>
+
+  <p>Mas ela protege dados. Não decisões.</p>
+
+  <p>Quando o SIEM classifica errado, quando o modelo aprova o que não deveria, quando o relatório gerado por IA está tecnicamente correto mas estrategicamente equivocado — a CIA não cobre isso. Nenhum framework de GRC cobre isso de forma estruturada.</p>
+
+  <p>Pesquisei. O NIST AI RMF toca em explicabilidade. A EU AI Act exige transparência em sistemas de alto risco. O Model AI Governance Framework de Singapura fala em supervisão humana. Mas nenhum organiza esses princípios como tríade operacional dentro do GRC — na mesma lógica aplicável e mnemônica que a CIA.</p>
+
+  <h2>A proposta: Tríade EDR</h2>
+
+  <p>Não para substituir a CIA. Para completá-la.</p>
+
+  <div class="edr-grid">
+    <div class="edr-card">
+      <div class="edr-letter">E</div>
+      <div class="edr-name">Explicabilidade</div>
+      <div class="edr-desc">O sistema consegue justificar suas decisões de forma compreensível para o operador humano? Sem explicabilidade, não há como questionar o output — e sem questionamento, não há governança real. Referências: XAI, SHAP, LIME, EU AI Act arts. 13–14.</div>
+    </div>
+    <div class="edr-card">
+      <div class="edr-letter">D</div>
+      <div class="edr-name">Due Diligence Algorítmica</div>
+      <div class="edr-desc">A organização validou os dados de treinamento, os critérios de decisão e os vieses embarcados no modelo antes de colocá-lo em produção crítica? A diligência não termina na aquisição — ela é contínua. Referências: NIST AI RMF, DAMA-DMBOK, ISO/IEC 42001.</div>
+    </div>
+    <div class="edr-card">
+      <div class="edr-letter">R</div>
+      <div class="edr-name">Responsabilização</div>
+      <div class="edr-desc">Quando o sistema erra, quem responde? A ausência de rastreabilidade nas decisões automatizadas cria um vácuo de accountability que os frameworks tradicionais de GRC ainda não endereçam de forma adequada. Referências: LGPD, EU AI Act, NATO AI Principles.</div>
+    </div>
+  </div>
+
+  <h2>CIA vs. EDR — perguntas diferentes, mesma cadeia</h2>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Dimensão</th>
+        <th>Tríade CIA</th>
+        <th>Tríade EDR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pergunta central</td>
+        <td>Os dados estão seguros?</td>
+        <td>A decisão pode ser auditada?</td>
+      </tr>
+      <tr>
+        <td>Objeto protegido</td>
+        <td>Dados e sistemas</td>
+        <td>Decisões e julgamentos</td>
+      </tr>
+      <tr>
+        <td>Escopo</td>
+        <td>Infraestrutura e informação</td>
+        <td>Processos decisórios com IA</td>
+      </tr>
+      <tr>
+        <td>Referência normativa</td>
+        <td>ISO 27001, NIST CSF, COBIT</td>
+        <td>NIST AI RMF, EU AI Act, LGPD</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Uma hipótese em construção</h2>
+
+  <p>Isso ainda é um estudo informal. Uma hipótese ancorada em uma lacuna real, documentável, que afeta diretamente CISOs, gestores de GRC e qualquer organização que esteja adotando IA em processos críticos.</p>
+
+  <p>Pretendo desenvolver essa tese formalmente no mestrado — linha de Gestão de Risco, PPCA/UnB. Não porque a academia valida a ideia, mas porque a lacuna merece rigor metodológico. E porque discordâncias fundamentadas são bem-vindas — são elas que refinam o argumento.</p>
+
+  <p>A CIA levou décadas para se tornar linguagem comum em cibersegurança. A EDR não pretende o mesmo caminho — pretende ser útil agora, para quem já está tomando decisões com sistemas que não consegue questionar.</p>
+
+  <div class="engagement">
+    <p>Discorde se puder. Que lacuna você vê nessa proposta?</p>
+  </div>
+
+  <div class="article-tags">
+    <span class="article-tag-item">#GRC</span>
+    <span class="article-tag-item">#IA</span>
+    <span class="article-tag-item">#Governança</span>
+    <span class="article-tag-item">#DefesaCibernética</span>
+    <span class="article-tag-item">#CibersegurançaBrasileira</span>
+    <span class="article-tag-item">#AIEthics</span>
+    <span class="article-tag-item">#SoberaniaCibernética</span>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="article-cta">
+  <a href="../blog.html" class="btn-primary">← Voltar ao Blog</a>
+  <a href="https://www.linkedin.com/in/filipedesiqueira" target="_blank" class="btn-outline">Seguir no LinkedIn ↗</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
