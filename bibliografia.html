@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bibliografia — Filipe de Siqueira. Arcabouço de Defesa e Segurança Cibernética do Brasil.">
+<title>Bibliografia — Filipe de Siqueira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6; --bg-alt: #f1ede8; --bg-dark: #111318;
+    --red: #c8342a; --red-light: #f5ece9; --blue: #1a3a6b;
+    --text: #1a1a1a; --text-mid: #4a4a4a; --text-dim: #888;
+    --border: #e2ddd7; --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; font-weight: 500; color: var(--red); letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--red); }
+  .nav-cta { background: var(--red) !important; color: white !important; padding: 0.4rem 1.1rem; border-radius: 3px; font-size: 0.8rem !important; }
+
+  .page-header { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem 3rem; border-bottom: 1px solid var(--border); }
+  .page-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .page-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--text); line-height: 1.1; margin-bottom: 0.8rem; }
+  .page-sub { font-size: 0.95rem; color: var(--text-mid); max-width: 560px; }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem 5rem; }
+
+  .controls {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    padding: 1.8rem 0; border-bottom: 1px solid var(--border);
+  }
+  .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.3rem 0.8rem; border-radius: 2px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--red); color: white; border-color: var(--red); }
+
+  .controls-right { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+  .control-select {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    color: var(--text-mid); background: var(--white);
+    border: 1px solid var(--border); border-radius: 2px;
+    padding: 0.3rem 0.6rem; cursor: pointer; outline: none; transition: border-color 0.2s;
+  }
+  .control-select:hover { border-color: var(--red); }
+  .control-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.05em; }
+
+  .search-wrap { position: relative; }
+  .search-input {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+    color: var(--text); background: var(--white);
+    border: 1px solid var(--border); border-radius: 2px;
+    padding: 0.3rem 0.7rem 0.3rem 2rem; outline: none;
+    transition: border-color 0.2s; width: 200px;
+  }
+  .search-input:focus { border-color: var(--red); }
+  .search-icon { position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--text-dim); pointer-events: none; }
+
+  .results-info { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); padding: 1rem 0 0; }
+
+  /* ── TABELA ─────────────────────────────────────────────── */
+  .bib-table-wrap { overflow-x: auto; padding-top: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { border-bottom: 2px solid var(--red); }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    padding: 0.6rem 0.8rem; text-align: left; white-space: nowrap;
+    cursor: pointer; user-select: none; transition: color 0.2s;
+  }
+  thead th:hover { color: var(--red); }
+  thead th .sort-icon { margin-left: 0.3rem; opacity: 0.4; font-size: 0.6rem; }
+  thead th.sorted { color: var(--red); }
+  thead th.sorted .sort-icon { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: var(--red-light); }
+
+  tbody td { padding: 1rem 0.8rem; vertical-align: top; font-size: 0.83rem; }
+
+  .td-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem;
+    color: var(--text-dim); white-space: nowrap; width: 40px;
+  }
+  .td-urgencia { white-space: nowrap; width: 30px; text-align: center; }
+  .td-bloco {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    color: var(--text-dim); white-space: nowrap;
+  }
+  .td-doc { min-width: 220px; }
+  .doc-titulo { font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 0.15rem; }
+  .doc-orgao { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--text-dim); }
+  .td-ano { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-mid); white-space: nowrap; }
+  .td-ementa { font-size: 0.8rem; color: var(--text-mid); line-height: 1.5; min-width: 200px; max-width: 340px; }
+  .td-nota { font-size: 0.78rem; color: var(--text-mid); line-height: 1.5; min-width: 200px; max-width: 320px; }
+  .td-link { white-space: nowrap; }
+  .link-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    color: var(--red); text-decoration: none; border: 1px solid var(--red);
+    padding: 0.2rem 0.5rem; border-radius: 2px; display: inline-block;
+    transition: all 0.2s; letter-spacing: 0.04em;
+  }
+  .link-btn:hover { background: var(--red); color: white; }
+  .link-restrito {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem;
+    color: var(--text-dim); border: 1px solid var(--border);
+    padding: 0.2rem 0.5rem; border-radius: 2px; display: inline-block;
+  }
+
+  .empty-state { padding: 4rem 0; text-align: center; font-size: 0.85rem; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── PAGINAÇÃO ──────────────────────────────────────────── */
+  .pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 2rem 0 0; }
+  .pagination-info { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); }
+  .pagination-btns { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+  .page-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+    padding: 0.4rem 0.75rem; border-radius: 2px;
+    border: 1px solid var(--border); background: var(--white);
+    color: var(--text-mid); cursor: pointer; transition: all 0.2s; min-width: 36px; text-align: center;
+  }
+  .page-btn:hover:not(:disabled) { border-color: var(--red); color: var(--red); }
+  .page-btn.active { background: var(--red); color: white; border-color: var(--red); }
+  .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .page-ellipsis { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-dim); padding: 0 0.2rem; }
+
+  /* ── SUMÁRIO ────────────────────────────────────────────── */
+  .summary-bar {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .summary-item { display: flex; flex-direction: column; gap: 0.1rem; }
+  .summary-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--red); line-height: 1; }
+  .summary-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.78rem; color: #6a7a8a; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: #f2f2f2; }
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links li:nth-child(n+4) { display: none; }
+    .page-header { padding: 3rem 1.5rem 2rem; }
+    .page-title { font-size: 2rem; }
+    .content { padding: 0 1.5rem 4rem; }
+    .controls { flex-direction: column; align-items: flex-start; }
+    .search-input { width: 160px; }
+    .td-ementa, .td-nota { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <ul class="nav-links">
+    <li><a href="index.html#sobre">Sobre</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="infograficos.html">Infográficos</a></li>
+    <li><a href="bibliografia.html" class="active">Bibliografia</a></li>
+    <li><a href="index.html#contato" class="nav-cta">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-tag">Referências</div>
+  <h1 class="page-title">Bibliografia</h1>
+  <p class="page-sub">Documentos e livros que moldaram minha forma de pensar sobre cibersegurança, soberania e IA — e que deixo aqui como convite de leitura. Alguns já são referência consolidada. Outros ainda estão na minha fila.</p>
+</div>
+
+<div class="content">
+
+  <div class="summary-bar" id="summaryBar"></div>
+
+  <div class="controls">
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="todos">Todos</button>
+      <button class="filter-btn" data-filter="Camada Militar">Militar</button>
+      <button class="filter-btn" data-filter="Política Civil">Política Civil</button>
+      <button class="filter-btn" data-filter="Instrumentos GSI">GSI</button>
+      <button class="filter-btn" data-filter="Legislação">Legislação</button>
+      <button class="filter-btn" data-filter="Regulação Setorial">Setorial</button>
+      <button class="filter-btn" data-filter="Controle e Auditoria">Controle</button>
+      <button class="filter-btn" data-filter="Frameworks Internacionais">Frameworks</button>
+      <button class="filter-btn" data-filter="Direito Internacional">Dir. Internacional</button>
+    </div>
+    <div class="controls-right">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" id="searchInput" placeholder="buscar...">
+      </div>
+      <span class="control-label">Exibir</span>
+      <select class="control-select" id="perPageSelect">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <span class="control-label">Urgência</span>
+      <select class="control-select" id="urgenciaSelect">
+        <option value="todas">Todas</option>
+        <option value="🔴">🔴 Alta</option>
+        <option value="🟡">🟡 Média</option>
+        <option value="🟢">🟢 Complementar</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="results-info" id="resultsInfo"></div>
+
+  <div class="bib-table-wrap" id="tableWrap">
+    <table id="bibTable">
+      <thead>
+        <tr>
+          <th class="th-num" onclick="sortBy('num')"># <span class="sort-icon" id="si-num">↕</span></th>
+          <th onclick="sortBy('urgencia')">🚦 <span class="sort-icon" id="si-urgencia">↕</span></th>
+          <th onclick="sortBy('bloco')">Bloco <span class="sort-icon" id="si-bloco">↕</span></th>
+          <th onclick="sortBy('titulo')">Documento <span class="sort-icon" id="si-titulo">↕</span></th>
+          <th onclick="sortBy('ano')">Ano <span class="sort-icon" id="si-ano">↕</span></th>
+          <th>Ementa</th>
+          <th>Nota Deputy CISO</th>
+          <th>Acesso</th>
+        </tr>
+      </thead>
+      <tbody id="bibBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none;">// nenhum documento encontrado para este filtro</div>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <ul class="footer-links">
+      <li><a href="index.html#sobre">Sobre</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="infograficos.html">Infográficos</a></li>
+      <li><a href="bibliografia.html">Bibliografia</a></li>
+    </ul>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026 · Revisão: nov/2026</div>
+  </div>
+</footer>
+
+<script>
+// ─── DADOS ────────────────────────────────────────────────────────────────────
+const REFERENCIAS = [
+  // BLOCO 1 — CAMADA MILITAR
+  { num: 1, urgencia: "🔴", bloco: "Camada Militar", titulo: "Política Nacional de Defesa (PND)", orgao: "MD", ano: 2022, ementa: "Define os objetivos e diretrizes da defesa nacional, incluindo o domínio cibernético como vetor estratégico.", nota: "Documento-raiz da cadeia de defesa. Todo posicionamento institucional do ComDCiber deriva desta política.", link: "https://www.gov.br/defesa/pt-br/assuntos/estado-e-defesa/pnd_end_web.pdf", restrito: false },
+  { num: 2, urgencia: "🔴", bloco: "Camada Militar", titulo: "Estratégia Nacional de Defesa (END)", orgao: "MD", ano: 2022, ementa: "Estabelece diretrizes para a preparação das Forças Armadas, com eixo cibernético como setor estratégico prioritário.", nota: "Define o ciberespaço como domínio operacional. Ancora a existência e expansão do ComDCiber no planejamento de longo prazo das FA.", link: "https://www.gov.br/defesa/pt-br/assuntos/estado-e-defesa/pnd_end_web.pdf", restrito: false },
+  { num: 3, urgencia: "🔴", bloco: "Camada Militar", titulo: "Livro Branco de Defesa Nacional (LBDN)", orgao: "MD", ano: 2020, ementa: "Documento de transparência que apresenta a estrutura, capacidades e doutrina de defesa do Brasil, incluindo defesa cibernética.", nota: "Referência pública de posicionamento soberano. Útil para embasar narrativas institucionais e comparações com outros países.", link: "https://www.gov.br/defesa/pt-br/assuntos/estado-e-defesa/livro_branco_compressed.pdf", restrito: false },
+
+
+  // BLOCO 2 — POLÍTICA CIVIL
+  { num: 4, urgencia: "🔴", bloco: "Política Civil", titulo: "PNCiber — Política Nacional de Cibersegurança (Dec. 11.856/2023)", orgao: "Presidência/GSI", ano: 2023, ementa: "Institui a Política Nacional de Cibersegurança, definindo princípios, objetivos e governança da segurança cibernética no Brasil.", nota: "Marco regulatório civil mais relevante para articulação entre defesa e segurança. Define o papel do ComDCiber no ecossistema nacional.", link: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/D11856.htm", restrito: false },
+  { num: 15, urgencia: "🔴", bloco: "Política Civil", titulo: "E-Ciber — Estratégia Nacional de Cibersegurança (Dec. 12.573/2025)", orgao: "Presidência/GSI", ano: 2025, ementa: "Atualiza a estratégia nacional de cibersegurança, incorporando IA, soberania digital e proteção de infraestruturas críticas.", nota: "Documento mais recente e estrategicamente relevante. Alinha-se diretamente aos conceitos de soberania cognitiva e ilusão de maturidade do Projeto Radix.", link: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/D12573.htm", restrito: false },
+  { num: 16, urgencia: "🔴", bloco: "Política Civil", titulo: "PNSI — Política Nacional de Segurança da Informação (Dec. 12.572/2025)", orgao: "Presidência/GSI", ano: 2025, ementa: "Estabelece a política nacional para gestão da segurança da informação no âmbito da APF.", nota: "Complementar à PNCiber. Define o quadro de governança de SI que o Deputy CISO deve conhecer para articulação com órgãos civis.", link: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/D12572.htm", restrito: false },
+  { num: 17, urgencia: "🟡", bloco: "Política Civil", titulo: "PNSIC — Política Nacional de SIC (Dec. 9.573/2018)", orgao: "Presidência/GSI", ano: 2018, ementa: "Antecessora da PNSI. Estabeleceu os primeiros marcos nacionais de SIC com foco em infraestruturas críticas.", nota: "Relevante para contextualização histórica da evolução normativa. Permite demonstrar domínio da trajetória regulatória nacional.", link: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/D9573.htm", restrito: false },
+  { num: 18, urgencia: "🟡", bloco: "Política Civil", titulo: "ENSIC — Estratégia Nacional de SIC (Dec. 10.569/2020)", orgao: "Presidência/GSI", ano: 2020, ementa: "Estratégia de implementação da PNSIC, com ações estruturantes para o período 2020–2023.", nota: "Relevante para análise de lacunas entre o planejado (2020) e o executado. Útil como referência comparativa sobre maturidade do ecossistema nacional.", link: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/decreto/D10569.htm", restrito: false },
+
+  // BLOCO 3 — INSTRUMENTOS GSI
+  { num: 19, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "Decreto nº 3.505/2000", orgao: "Presidência", ano: 2000, ementa: "Institui a Política de Segurança da Informação nos órgãos e entidades da APF — primeiro marco normativo do tema no Brasil.", nota: "Base histórica da SIC no Brasil. Útil para demonstrar a trajetória de 25 anos da governança de segurança da informação no país.", link: "https://www.planalto.gov.br/ccivil_03/decreto/d3505.htm", restrito: false },
+  { num: 20, urgencia: "🔴", bloco: "Instrumentos GSI", titulo: "Decreto nº 10.748/2021 — ReGIC", orgao: "Presidência/GSI", ano: 2021, ementa: "Cria a Rede Federal de Gestão de Incidentes Cibernéticos (ReGIC), definindo papéis, fluxos e responsabilidades no tratamento de incidentes.", nota: "Essencial para o Deputy CISO. Define o framework nacional de resposta a incidentes e o papel do ComDCiber na ReGIC.", link: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/decreto/D10748.htm", restrito: false },
+  { num: 21, urgencia: "🔴", bloco: "Instrumentos GSI", titulo: "Portaria GSI nº 93/2021 — Glossário de SI", orgao: "GSI/PR", ano: 2021, ementa: "Aprova o Glossário de Segurança da Informação — padroniza terminologia oficial para toda a APF.", nota: "Referência terminológica oficial. O Deputy CISO deve dominar esta nomenclatura para comunicação institucional precisa com órgãos civis e militares.", link: "https://www.in.gov.br/web/dou/-/portaria-gsi-pr-n-93-de-26-de-agosto-de-2021-341144369", restrito: false },
+  { num: 22, urgencia: "🔴", bloco: "Instrumentos GSI", titulo: "Portaria GSI nº 120/2022", orgao: "GSI/PR", ano: 2022, ementa: "Dispõe sobre a gestão de segurança da informação e cibersegurança na APF, atualizando requisitos e responsabilidades.", nota: "Define requisitos de governança de cibersegurança para órgãos federais. Relevante para alinhamento entre práticas do ComDCiber e exigências da APF.", link: "https://www.in.gov.br/web/dou/-/portaria-gsi-pr-n-120-de-25-de-outubro-de-2022-438704795", restrito: false },
+  { num: 23, urgencia: "🔴", bloco: "Instrumentos GSI", titulo: "IN GSI nº 1/2020 — Estrutura de Gestão de SI", orgao: "GSI/PR", ano: 2020, ementa: "Dispõe sobre a Estrutura de Gestão da Segurança da Informação nos órgãos e entidades da APF.", nota: "Base da governança de SI na APF. Define papéis como CISO e estruturas de comitê — referência direta para o cargo do Deputy CISO.", link: "https://www.in.gov.br/web/dou/-/instrucao-normativa-n-1-de-27-de-maio-de-2020-258915814", restrito: false },
+  { num: 24, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 2/2021 — Requisitos Mínimos de Segurança", orgao: "GSI/PR", ano: 2021, ementa: "Estabelece requisitos mínimos de segurança cibernética para os órgãos da APF.", nota: "Define controles mínimos obrigatórios. Permite ao Deputy CISO calibrar o nível de maturidade do ComDCiber frente às exigências normativas.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 25, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 3/2021 — Sistemas Estruturantes", orgao: "GSI/PR", ano: 2021, ementa: "Dispõe sobre os padrões mínimos de segurança da informação para sistemas estruturantes da APF.", nota: "Relevante para avaliação de conformidade de sistemas críticos.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 26, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 4/2021 — Gestão de Identidade e Acesso", orgao: "GSI/PR", ano: 2021, ementa: "Estabelece diretrizes para a gestão de identidade e controle de acesso na APF.", nota: "Fundamental para políticas de acesso e autenticação — controle crítico em ambientes de defesa cibernética.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 27, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 5/2021 — Segurança em Redes", orgao: "GSI/PR", ano: 2021, ementa: "Dispõe sobre a segurança em redes de comunicação e computadores na APF.", nota: "Referência técnica para segurança de redes — área operacional core do ComDCiber.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 28, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 6/2021 — Computação em Nuvem", orgao: "GSI/PR", ano: 2021, ementa: "Estabelece requisitos de segurança para uso de computação em nuvem na APF.", nota: "Relevante para decisões de arquitetura em ambientes híbridos e cloud no ComDCiber.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 29, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 7/2021 — Gestão de Riscos de SI", orgao: "GSI/PR", ano: 2021, ementa: "Dispõe sobre a gestão de riscos de segurança da informação na APF.", nota: "Alinha-se à função de GRC do Deputy CISO. Referência normativa para metodologia de gestão de riscos cibernéticos.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 30, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 8/2021 — Tratamento de Incidentes", orgao: "GSI/PR", ano: 2021, ementa: "Estabelece diretrizes para o tratamento de incidentes de segurança cibernética na APF.", nota: "Complementa o Decreto 10.748/2021. Define procedimentos de resposta a incidentes no nível civil — base para coordenação civil-militar.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 31, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 9/2022 — Segurança em Contratações de TI", orgao: "GSI/PR", ano: 2022, ementa: "Dispõe sobre a segurança em contratações de TI e terceirização de serviços na APF.", nota: "Relevante para gestão de cadeia de suprimentos cibernética — vetor crescente de risco em ambientes de defesa.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+  { num: 32, urgencia: "🟡", bloco: "Instrumentos GSI", titulo: "IN GSI nº 10/2023 — IA na APF", orgao: "GSI/PR", ano: 2023, ementa: "Estabelece requisitos de segurança para uso de inteligência artificial na APF.", nota: "Altamente relevante para o Projeto Radix Cyber. Primeira norma brasileira específica sobre uso seguro de IA na APF — referência direta para a Tríade EDR.", link: "https://www.gov.br/gsi/pt-br/assuntos/dsi/instrucoes-normativas", restrito: false },
+
+  // BLOCO 4 — LEGISLAÇÃO
+  { num: 33, urgencia: "🟡", bloco: "Legislação", titulo: "Lei nº 9.983/2000", orgao: "Congresso Nacional", ano: 2000, ementa: "Altera o Código Penal para tipificar crimes contra o sistema financeiro e a previdência social por meios informáticos.", nota: "Primeiro marco penal relacionado a crimes digitais. Relevante para contextualização histórica da legislação cibernética brasileira.", link: "https://www.planalto.gov.br/ccivil_03/leis/l9983.htm", restrito: false },
+  { num: 34, urgencia: "🟡", bloco: "Legislação", titulo: "Lei nº 12.737/2012 — Lei Carolina Dieckmann", orgao: "Congresso Nacional", ano: 2012, ementa: "Tipifica delitos ou crimes informáticos, incluindo invasão de dispositivo informático e interrupção de serviço telemático.", nota: "Base legal para criminalização de ataques cibernéticos. Relevante para entendimento do arcabouço penal que suporta operações defensivas.", link: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12737.htm", restrito: false },
+  { num: 35, urgencia: "🟡", bloco: "Legislação", titulo: "Lei nº 12.965/2014 — Marco Civil da Internet", orgao: "Congresso Nacional", ano: 2014, ementa: "Estabelece princípios, garantias, direitos e deveres para o uso da internet no Brasil.", nota: "Define os limites legais para monitoramento, coleta de dados e atuação em redes — impacta diretamente operações de defesa cibernética.", link: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm", restrito: false },
+  { num: 36, urgencia: "🔴", bloco: "Legislação", titulo: "Lei nº 13.709/2018 — LGPD", orgao: "Congresso Nacional", ano: 2018, ementa: "Lei Geral de Proteção de Dados Pessoais — regula o tratamento de dados pessoais por pessoas naturais e jurídicas.", nota: "Impacta diretamente a gestão de dados em operações cibernéticas. O Deputy CISO precisa dominar as exceções aplicáveis à segurança nacional e defesa.", link: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm", restrito: false },
+  { num: 37, urgencia: "🔴", bloco: "Legislação", titulo: "Lei nº 14.133/2021 — Nova Lei de Licitações", orgao: "Congresso Nacional", ano: 2021, ementa: "Estabelece normas gerais de licitação e contratação para a APF, incluindo requisitos de segurança em contratações de TI.", nota: "Relevante para todas as contratações de produtos e serviços de cibersegurança no ComDCiber. Conhecimento obrigatório para decisões de aquisição.", link: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm", restrito: false },
+  { num: 38, urgencia: "🟡", bloco: "Legislação", titulo: "Lei nº 14.155/2021 — Crimes Digitais", orgao: "Congresso Nacional", ano: 2021, ementa: "Endurece as penas para crimes de violação de dispositivo informático, fraude e estelionato digitais.", nota: "Atualiza o arcabouço penal cibernético. Relevante para compreensão do ambiente legal em que operam as equipes de resposta a incidentes.", link: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14155.htm", restrito: false },
+  { num: 39, urgencia: "🟡", bloco: "Legislação", titulo: "Decreto nº 7.724/2012 — Regulamento da LAI", orgao: "Presidência", ano: 2012, ementa: "Regulamenta a Lei de Acesso à Informação (Lei 12.527/2011), definindo critérios de classificação e desclassificação de informações.", nota: "Fundamental para gestão de informações classificadas no ComDCiber. Define os critérios legais para restrição de acesso a documentos sensíveis.", link: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/decreto/d7724.htm", restrito: false },
+  { num: 40, urgencia: "🔴", bloco: "Legislação", titulo: "Decreto nº 9.637/2018 — Política Nacional de SI", orgao: "Presidência", ano: 2018, ementa: "Institui a Política Nacional de Segurança da Informação, cria o Comitê Gestor de Segurança da Informação.", nota: "Base da governança nacional de SI. Define o ecossistema institucional em que o ComDCiber opera — leitura essencial para o Deputy CISO.", link: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/D9637.htm", restrito: false },
+
+  // BLOCO 5 — REGULAÇÃO SETORIAL
+  { num: 41, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução Anatel nº 740/2020", orgao: "Anatel", ano: 2020, ementa: "Aprova o Regulamento de Segurança Cibernética aplicado ao setor de telecomunicações.", nota: "Relevante para o ComDCiber no contexto de proteção de infraestruturas críticas de telecomunicações.", link: "https://informacoes.anatel.gov.br/legislacao/resolucoes/2020/1450-resolucao-740", restrito: false },
+  { num: 42, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução Anatel nº 770/2023", orgao: "Anatel", ano: 2023, ementa: "Atualiza requisitos de segurança cibernética para prestadoras de serviços de telecomunicações.", nota: "Versão atualizada — substitui parcialmente a Res. 740. Relevante para análise de maturidade regulatória setorial.", link: "https://informacoes.anatel.gov.br/legislacao/resolucoes/2023", restrito: false },
+  { num: 43, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "PRODIST Módulo 12 — Segurança Cibernética", orgao: "ANEEL", ano: 2023, ementa: "Procedimentos de Distribuição de Energia Elétrica — Módulo 12 trata de requisitos de segurança cibernética para o setor elétrico.", nota: "Setor elétrico é infraestrutura crítica de alta relevância para defesa nacional. Útil para análise de risco em cenários de conflito.", link: "https://www.aneel.gov.br/prodist", restrito: false },
+  { num: 44, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução BCB nº 4.893/2021", orgao: "Banco Central do Brasil", ano: 2021, ementa: "Dispõe sobre a política de segurança cibernética e sobre requisitos para contratação de serviços de nuvem.", nota: "Referência de maturidade regulatória setorial. O setor financeiro é pioneiro em requisitos de cibersegurança no Brasil — modelo para benchmarking.", link: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20BCB&numero=4893", restrito: false },
+  { num: 45, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução CMN/BCB nº 85/2021", orgao: "BCB/CMN", ano: 2021, ementa: "Complementa a Res. 4.893 com requisitos específicos para instituições de menor porte do sistema financeiro.", nota: "Relevante para entendimento da regulação proporcional ao risco — conceito aplicável à governança do ComDCiber.", link: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolu%C3%A7%C3%A3o%20CMN&numero=85", restrito: false },
+  { num: 46, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Circular BCB nº 3.909/2018", orgao: "Banco Central do Brasil", ano: 2018, ementa: "Estabelece os requisitos mínimos para a política de segurança cibernética das instituições autorizadas pelo BCB.", nota: "Marco inicial da regulação de cibersegurança no setor financeiro. Relevante para contextualização histórica da maturidade regulatória brasileira.", link: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Circular&numero=3909", restrito: false },
+  { num: 47, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução CNJ nº 396/2021 — ENSEC-PJ", orgao: "CNJ", ano: 2021, ementa: "Institui a Estratégia Nacional de Segurança Cibernética do Poder Judiciário (ENSEC-PJ).", nota: "Relevante para compreensão da abrangência da cibersegurança nacional além do Executivo.", link: "https://atos.cnj.jus.br/atos/detalhar/3980", restrito: false },
+  { num: 48, urgencia: "🟢", bloco: "Regulação Setorial", titulo: "Resolução CNJ nº 522/2023", orgao: "CNJ", ano: 2023, ementa: "Atualiza a ENSEC-PJ, incorporando novos requisitos de segurança e governança para o Judiciário.", nota: "Versão mais recente. Demonstra evolução da maturidade regulatória do Judiciário — referência para análise comparativa entre poderes.", link: "https://atos.cnj.jus.br/atos/detalhar/5407", restrito: false },
+
+  // BLOCO 6 — CONTROLE E AUDITORIA
+  { num: 49, urgencia: "🟡", bloco: "Controle e Auditoria", titulo: "TCU — Acórdão nº 1.603/2008", orgao: "TCU", ano: 2008, ementa: "Primeiro levantamento sistemático do TCU sobre segurança da informação na APF — referência histórica de auditoria.", nota: "Marco histórico das auditorias de SI no Brasil. Permite demonstrar a trajetória de 15+ anos de avaliações de maturidade.", link: "https://pesquisa.apps.tcu.gov.br/resultado/acordao-completo/num%3A1603%20ano%3A2008", restrito: false },
+  { num: 50, urgencia: "🔴", bloco: "Controle e Auditoria", titulo: "TCU — Acórdão nº 2.471/2023", orgao: "TCU", ano: 2023, ementa: "Levantamento mais recente do TCU sobre o estado da segurança cibernética na APF — avalia maturidade, lacunas e recomendações.", nota: "Leitura prioritária. Fotografia atual do nível de maturidade cibernética da APF. Dados quantitativos úteis para embasar artigos e dissertação.", link: "https://pesquisa.apps.tcu.gov.br/resultado/acordao-completo/num%3A2471%20ano%3A2023", restrito: false },
+  { num: 51, urgencia: "🟡", bloco: "Controle e Auditoria", titulo: "IN Conjunta MP/CGU nº 1/2016", orgao: "MP/CGU", ano: 2016, ementa: "Dispõe sobre controles internos, gestão de riscos e governança no âmbito do Poder Executivo Federal.", nota: "Base da governança de riscos na APF. O Deputy CISO precisa alinhar a gestão de riscos cibernéticos ao framework de controles internos da CGU.", link: "https://www.gov.br/cgu/pt-br/assuntos/noticias/2016/10/cgu-e-mp-publicam-instrucao-normativa-conjunta", restrito: false },
+  { num: 52, urgencia: "🔴", bloco: "Controle e Auditoria", titulo: "IN SGD/ME nº 94/2022", orgao: "SGD/ME (atual SEGES/MGI)", ano: 2022, ementa: "Estabelece o modelo de governança de TIC para a APF, definindo papéis, processos e indicadores de maturidade digital.", nota: "Relevante para alinhamento da governança de TIC do ComDCiber ao modelo federal. Contém indicadores de maturidade digital aplicáveis à autoavaliação.", link: "https://www.in.gov.br/web/dou/-/instrucao-normativa-sgd-me-n-94-de-23-de-dezembro-de-2022-454916783", restrito: false },
+
+  // BLOCO 7 — FRAMEWORKS INTERNACIONAIS
+  { num: 53, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "ISO/IEC 27001:2022 — Information Security Management Systems", orgao: "ISO/IEC", ano: 2022, ementa: "Principal norma internacional para SGSI. Define requisitos para estabelecer, implementar, manter e melhorar um sistema de gestão de segurança da informação.", nota: "Referência central de governança de SI. O Deputy CISO deve dominar esta norma para certificação e auditoria de processos do ComDCiber. Catálogo [F002] no acervo Radix.", link: "https://www.iso.org/standard/27001", restrito: false },
+  { num: 54, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "ISO/IEC 27002:2022 — Information Security Controls", orgao: "ISO/IEC", ano: 2022, ementa: "Guia de referência para controles de segurança da informação, complementar à ISO 27001.", nota: "Catálogo de 93 controles de segurança. Referência prática para implementação — base para benchmarking e gap analysis no ComDCiber.", link: "https://www.iso.org/standard/75652.html", restrito: false },
+  { num: 55, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "ISO/IEC 27005:2022 — Information Security Risk Management", orgao: "ISO/IEC", ano: 2022, ementa: "Diretrizes para gestão de riscos de segurança da informação, alinhadas à ISO 27001.", nota: "Referência metodológica para GRC. Essencial para o Deputy CISO estruturar processos formais de gestão de riscos cibernéticos.", link: "https://www.iso.org/standard/80585.html", restrito: false },
+  { num: 56, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-37 Rev. 2 — Risk Management Framework", orgao: "NIST/EUA", ano: 2018, ementa: "Define o processo de gestão de riscos para sistemas de informação federais dos EUA — referência global para RMF.", nota: "Complementar à ISO 27005. Oferece visão sistêmica de gestão de risco aplicável a ambientes governamentais complexos.", link: "https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final", restrito: false },
+  { num: 57, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-53 Rev. 5 — Security and Privacy Controls", orgao: "NIST/EUA", ano: 2020, ementa: "Catálogo abrangente de controles de segurança e privacidade para sistemas de informação e organizações.", nota: "Catálogo mais abrangente de controles de segurança disponível. Referência para avaliar completude dos controles implementados no ComDCiber.", link: "https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final", restrito: false },
+  { num: 58, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide", orgao: "NIST/EUA", ano: 2012, ementa: "Guia metodológico para resposta a incidentes de segurança computacional — referência global para CSIRT.", nota: "Referência técnica fundamental para operações do ComDCiber. Base metodológica para estruturação e avaliação de capacidades de resposta a incidentes. ⚠️ Rev. 3 em desenvolvimento.", link: "https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final", restrito: false },
+  { num: 59, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-82 Rev. 3 — Guide to OT Security", orgao: "NIST/EUA", ano: 2023, ementa: "Guia para segurança de sistemas de tecnologia operacional (ICS/SCADA) — inclui infraestruturas críticas.", nota: "Relevante para proteção de infraestruturas críticas militares. Cobre sistemas de controle industrial presentes em instalações de defesa.", link: "https://csrc.nist.gov/publications/detail/sp/800-82/rev-3/final", restrito: false },
+  { num: 60, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-144 — Guidelines on Security and Privacy in Public Cloud", orgao: "NIST/EUA", ano: 2011, ementa: "Diretrizes para segurança e privacidade em ambientes de computação em nuvem pública.", nota: "⚠️ Documento com mais de 10 anos — verificar atualização. Útil para fundamentação de políticas de cloud no ComDCiber, com ressalva de desatualização.", link: "https://csrc.nist.gov/publications/detail/sp/800-144/final", restrito: false },
+  { num: 61, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "NIST SP 800-161 Rev. 1 — Cybersecurity Supply Chain Risk Management", orgao: "NIST/EUA", ano: 2022, ementa: "Práticas para gestão de riscos de segurança cibernética na cadeia de suprimentos de TIC.", nota: "Crescentemente relevante para defesa. Ataques à cadeia de suprimentos (SolarWinds, XZ Utils) tornam este framework prioritário para ambientes militares.", link: "https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final", restrito: false },
+  { num: 62, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "NIST AI Risk Management Framework — AI RMF 1.0", orgao: "NIST/EUA", ano: 2023, ementa: "Framework voluntário para gestão de riscos associados ao desenvolvimento e uso de sistemas de IA.", nota: "Diretamente conectado ao Projeto Radix Cyber. Referência internacional para a Tríade EDR — catálogo [F003] no acervo.", link: "https://www.nist.gov/system/files/documents/2023/01/26/AI%20RMF%201.0.pdf", restrito: false },
+  { num: 63, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "MITRE ATT&CK Framework", orgao: "MITRE Corporation/EUA", ano: 2024, ementa: "Base de conhecimento globalmente adotada de táticas, técnicas e procedimentos (TTPs) adversariais em operações cibernéticas.", nota: "Referência técnica operacional essencial. O Deputy CISO deve dominar este framework para comunicação com equipes técnicas e análise de ameaças. Catálogo [F011].", link: "https://attack.mitre.org", restrito: false },
+  { num: 64, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "IEC 62443 — Security for Industrial Automation and Control Systems", orgao: "IEC", ano: 2024, ementa: "Série de normas para segurança cibernética em sistemas de automação e controle industrial (IACS).", nota: "Relevante para proteção de sistemas de controle em instalações militares e infraestruturas críticas nacionais.", link: "https://www.iec.ch/cybersecurity", restrito: false },
+  { num: 65, urgencia: "🟡", bloco: "Frameworks Internacionais", titulo: "CSA CCM — Cloud Controls Matrix", orgao: "Cloud Security Alliance", ano: 2023, ementa: "Framework de controles de segurança específico para ambientes de computação em nuvem.", nota: "Complementar às normas ISO para avaliação de segurança em serviços de nuvem utilizados pelo ComDCiber.", link: "https://cloudsecurityalliance.org/research/cloud-controls-matrix", restrito: false },
+  { num: 66, urgencia: "🔴", bloco: "Frameworks Internacionais", titulo: "NATO AI Principles 2021 — Principles of Responsible Use of Artificial Intelligence", orgao: "NATO", ano: 2021, ementa: "Princípios da OTAN para o uso responsável de inteligência artificial em contextos de defesa e segurança.", nota: "Alta relevância estratégica. Referência para posicionamento soberano brasileiro frente a padrões aliados de IA em defesa — diálogo com o Projeto Radix Cyber.", link: "https://www.nato.int/cps/en/natohq/official_texts_187617.htm", restrito: false },
+
+  // BLOCO 8 — DIREITO INTERNACIONAL
+  { num: 67, urgencia: "🔴", bloco: "Direito Internacional", titulo: "Convenção de Budapeste — Convention on Cybercrime", orgao: "Conselho da Europa", ano: 2001, ementa: "Primeiro tratado internacional sobre crimes informáticos. O Brasil aderiu formalmente em 2021.", nota: "Marco jurídico internacional de alta relevância. A adesão brasileira impacta diretamente a cooperação internacional em resposta a incidentes.", link: "https://www.coe.int/en/web/conventions/full-list/-/conventions/treaty/185", restrito: false },
+  { num: 68, urgencia: "🔴", bloco: "Direito Internacional", titulo: "Tallinn Manual 2.0 — Manual on the International Law Applicable to Cyber Operations", orgao: "NATO CCDCOE", ano: 2017, ementa: "Obra acadêmica de referência que analisa a aplicação do direito internacional a operações cibernéticas, incluindo conflitos armados.", nota: "Referência doutrinária internacional para operações cibernéticas ofensivas e defensivas. Essencial para compreender os limites legais das operações militares no ciberespaço.", link: "https://ccdcoe.org/research/tallinn-manual", restrito: false },
+  { num: 69, urgencia: "🟡", bloco: "Direito Internacional", titulo: "ONU A/RES/73/27 — Developments in the field of information and telecommunications", orgao: "ONU/AGNU", ano: 2018, ementa: "Resolução que reafirma normas de comportamento responsável dos Estados no ciberespaço e cria grupo de especialistas governamentais (GGE).", nota: "Relevante para compreensão do posicionamento brasileiro em fóruns multilaterais de governança do ciberespaço.", link: "https://undocs.org/A/RES/73/27", restrito: false },
+  { num: 70, urgencia: "🟡", bloco: "Direito Internacional", titulo: "ONU A/RES/74/28 — Developments in the field of information and telecommunications", orgao: "ONU/AGNU", ano: 2019, ementa: "Continuação da A/RES/73/27 — cria grupo de trabalho aberto (OEWG) para discussão de normas de comportamento no ciberespaço.", nota: "Complementar à resolução anterior. Relevante para posicionamento soberano brasileiro nas discussões sobre regras de engajamento no ciberespaço.", link: "https://undocs.org/A/RES/74/28", restrito: false }
+];
+
+// ─── ESTADO ───────────────────────────────────────────────────────────────────
+let filtroBloco = "todos";
+let filtroUrgencia = "todas";
+let busca = "";
+let paginaAtual = 1;
+let sortCol = "num";
+let sortDir = 1;
+
+const perPage = () => parseInt(document.getElementById("perPageSelect").value);
+
+// ─── SUMÁRIO ──────────────────────────────────────────────────────────────────
+function renderSummary() {
+  const total = REFERENCIAS.length;
+  const vermelhos = REFERENCIAS.filter(r => r.urgencia === "🔴").length;
+  const amarelos = REFERENCIAS.filter(r => r.urgencia === "🟡").length;
+  const verdes = REFERENCIAS.filter(r => r.urgencia === "🟢").length;
+  document.getElementById("summaryBar").innerHTML = `
+    <div class="summary-item"><div class="summary-num">${total}</div><div class="summary-label">Total de documentos</div></div>
+    <div class="summary-item"><div class="summary-num">${vermelhos}</div><div class="summary-label">Leitura urgente 🔴</div></div>
+    <div class="summary-item"><div class="summary-num">${amarelos}</div><div class="summary-label">Importante 🟡</div></div>
+    <div class="summary-item"><div class="summary-num">${verdes}</div><div class="summary-label">Complementar 🟢</div></div>
+    <div class="summary-item"><div class="summary-num">8</div><div class="summary-label">Blocos temáticos</div></div>
+  `;
+}
+
+// ─── FILTRO + ORDENAÇÃO ───────────────────────────────────────────────────────
+function filtrarOrdenar() {
+  let lista = [...REFERENCIAS];
+  if (filtroBloco !== "todos") lista = lista.filter(r => r.bloco === filtroBloco);
+  if (filtroUrgencia !== "todas") lista = lista.filter(r => r.urgencia === filtroUrgencia);
+  if (busca.trim()) {
+    const q = busca.toLowerCase();
+    lista = lista.filter(r =>
+      r.titulo.toLowerCase().includes(q) ||
+      r.orgao.toLowerCase().includes(q) ||
+      r.ementa.toLowerCase().includes(q) ||
+      r.nota.toLowerCase().includes(q) ||
+      String(r.ano).includes(q)
+    );
+  }
+  lista.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (sortCol === "urgencia") {
+      const ord = { "🔴": 1, "🟡": 2, "🟢": 3 };
+      va = ord[va] || 9; vb = ord[vb] || 9;
+    }
+    if (typeof va === "string") return va.localeCompare(vb) * sortDir;
+    return (va - vb) * sortDir;
+  });
+  return lista;
+}
+
+// ─── RENDER TABELA ────────────────────────────────────────────────────────────
+function render() {
+  const lista = filtrarOrdenar();
+  const pp = perPage();
+  const totalPags = Math.max(1, Math.ceil(lista.length / pp));
+  if (paginaAtual > totalPags) paginaAtual = totalPags;
+  const inicio = (paginaAtual - 1) * pp;
+  const pagina = lista.slice(inicio, inicio + pp);
+
+  document.getElementById("resultsInfo").textContent = lista.length === 0
+    ? ""
+    : `Exibindo ${inicio + 1}–${Math.min(inicio + pp, lista.length)} de ${lista.length} documento${lista.length !== 1 ? "s" : ""}`;
+
+  const tbody = document.getElementById("bibBody");
+  const empty = document.getElementById("emptyState");
+  const table = document.getElementById("bibTable");
+
+  if (lista.length === 0) {
+    tbody.innerHTML = "";
+    table.style.display = "none";
+    empty.style.display = "block";
+  } else {
+    table.style.display = "";
+    empty.style.display = "none";
+  tbody.innerHTML = pagina.map((r, i) => {
+    const numGlobal = inicio + i + 1;
+    return `
+      <tr>
+        <td class="td-num">${numGlobal}</td>
+        <td class="td-urgencia">${r.urgencia}</td>
+        <td class="td-bloco">${r.bloco}</td>
+        <td class="td-doc">
+          <div class="doc-titulo">${r.titulo}</div>
+          <div class="doc-orgao">${r.orgao}</div>
+        </td>
+        <td class="td-ano">${r.ano}</td>
+        <td class="td-ementa">${r.ementa}</td>
+        <td class="td-nota">${r.nota}</td>
+        <td class="td-link">${r.link
+          ? `<a class="link-btn" href="${r.link}" target="_blank" rel="noopener">↗ Acessar</a>`
+          : '<span class="link-restrito">—</span>'
+        }</td>
+      </tr>
+    `;
+  }).join("");
+  }
+
+  renderPaginacao(totalPags, lista.length, pp);
+  updateSortIcons();
+}
+
+// ─── PAGINAÇÃO ────────────────────────────────────────────────────────────────
+function renderPaginacao(totalPags, total, pp) {
+  const el = document.getElementById("pagination");
+  if (totalPags <= 1) { el.innerHTML = ""; return; }
+
+  const inicio = (paginaAtual - 1) * pp;
+  let btns = "";
+  const MAX_VISIBLE = 7;
+
+  if (totalPags <= MAX_VISIBLE) {
+    for (let i = 1; i <= totalPags; i++) {
+      btns += `<button class="page-btn ${i === paginaAtual ? "active" : ""}" onclick="irPara(${i})">${i}</button>`;
+    }
+  } else {
+    btns += `<button class="page-btn ${paginaAtual === 1 ? "active" : ""}" onclick="irPara(1)">1</button>`;
+    if (paginaAtual > 3) btns += `<span class="page-ellipsis">…</span>`;
+    for (let i = Math.max(2, paginaAtual - 1); i <= Math.min(totalPags - 1, paginaAtual + 1); i++) {
+      btns += `<button class="page-btn ${i === paginaAtual ? "active" : ""}" onclick="irPara(${i})">${i}</button>`;
+    }
+    if (paginaAtual < totalPags - 2) btns += `<span class="page-ellipsis">…</span>`;
+    btns += `<button class="page-btn ${paginaAtual === totalPags ? "active" : ""}" onclick="irPara(${totalPags})">${totalPags}</button>`;
+  }
+
+  el.innerHTML = `
+    <div class="pagination-info">Página ${paginaAtual} de ${totalPags} · ${total} documentos</div>
+    <div class="pagination-btns">
+      <button class="page-btn" onclick="irPara(${paginaAtual - 1})" ${paginaAtual === 1 ? "disabled" : ""}>← Anterior</button>
+      ${btns}
+      <button class="page-btn" onclick="irPara(${paginaAtual + 1})" ${paginaAtual === totalPags ? "disabled" : ""}>Próxima →</button>
+    </div>`;
+}
+
+function irPara(p) {
+  const lista = filtrarOrdenar();
+  const totalPags = Math.ceil(lista.length / perPage());
+  if (p < 1 || p > totalPags) return;
+  paginaAtual = p;
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ─── ORDENAÇÃO ────────────────────────────────────────────────────────────────
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  paginaAtual = 1;
+  render();
+}
+
+function updateSortIcons() {
+  ["num","urgencia","bloco","titulo","ano"].forEach(c => {
+    const el = document.getElementById("si-" + c);
+    if (!el) return;
+    const th = el.closest("th");
+    if (sortCol === c) {
+      el.textContent = sortDir === 1 ? "↑" : "↓";
+      th.classList.add("sorted");
+    } else {
+      el.textContent = "↕";
+      th.classList.remove("sorted");
+    }
+  });
+}
+
+// ─── EVENTOS ──────────────────────────────────────────────────────────────────
+document.getElementById("filterRow").addEventListener("click", e => {
+  if (!e.target.matches(".filter-btn")) return;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  e.target.classList.add("active");
+  filtroBloco = e.target.dataset.filter;
+  paginaAtual = 1;
+  render();
+});
+
+document.getElementById("perPageSelect").addEventListener("change", () => { paginaAtual = 1; render(); });
+document.getElementById("urgenciaSelect").addEventListener("change", e => { filtroUrgencia = e.target.value; paginaAtual = 1; render(); });
+document.getElementById("searchInput").addEventListener("input", e => { busca = e.target.value; paginaAtual = 1; render(); });
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderSummary();
+render();
+</script>
+</body>
+</html>
