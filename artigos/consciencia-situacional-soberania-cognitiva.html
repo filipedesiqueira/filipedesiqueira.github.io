@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Consciência Situacional e Soberania Cognitiva — quando a automação comprime as etapas que formam o julgamento humano. Por Filipe de Siqueira.">
+<title>Consciência Situacional e Soberania Cognitiva — Filipe de Siqueira</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f8f6;
+    --bg-alt: #f1ede8;
+    --bg-dark: #111318;
+    --red: #c8342a;
+    --red-light: #f5ece9;
+    --blue: #1a3a6b;
+    --text: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-dim: #888;
+    --border: #e2ddd7;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,248,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--red); letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+  }
+
+  .nav-back {
+    font-size: 0.82rem; color: var(--text-mid);
+    text-decoration: none; display: flex;
+    align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--red); }
+
+  .article-hero {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2.5rem 4rem;
+  }
+
+  .article-hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .article-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--red);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .article-tag::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--red);
+  }
+
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--text); margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .article-meta {
+    display: flex; align-items: center;
+    gap: 1.5rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .article-author {
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+
+  .author-photo {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--text); line-height: 1.2;
+  }
+
+  .author-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  .article-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem; color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  .article-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 6rem;
+  }
+
+  .article-body p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 1.6rem;
+  }
+
+  .article-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--text); line-height: 1.25;
+    margin-top: 3rem; margin-bottom: 1.2rem;
+  }
+
+  .article-body strong { color: var(--text); font-weight: 600; }
+
+  .article-body blockquote {
+    border-left: 3px solid var(--red);
+    padding: 0.8rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--red-light);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article-body blockquote p {
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  .engagement {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 1.8rem 2rem;
+    margin: 3rem 0;
+  }
+
+  .engagement p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem !important;
+    font-weight: 700;
+    color: var(--text) !important;
+    font-style: normal !important;
+    margin-bottom: 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  .article-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .article-tag-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem; color: var(--blue);
+    background: var(--bg-alt);
+    padding: 0.3rem 0.7rem; border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .article-cta {
+    max-width: 720px; margin: 0 auto;
+    padding: 0 2.5rem 4rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-outline {
+    border: 1.5px solid var(--border); color: var(--text-mid);
+    padding: 0.75rem 1.8rem; border-radius: 3px;
+    font-size: 0.85rem; font-weight: 500;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--text-mid); color: var(--text); }
+
+  footer { background: var(--bg-dark); padding: 2.5rem; }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #c8342a; letter-spacing: 0.08em; }
+  .footer-copy { font-size: 0.72rem; color: #3a4a5c; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .article-hero { padding: 3rem 1.5rem 2.5rem; }
+    .article-body { padding: 2.5rem 1.5rem 4rem; }
+    .article-cta { padding: 0 1.5rem 3rem; }
+    .article-date { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">⬡ Filipe de Siqueira</a>
+  <a href="../blog.html" class="nav-back">← Voltar ao Blog</a>
+</nav>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-tag">Defesa Cibernética · Consciência Situacional · Soberania Cognitiva</div>
+    <h1 class="article-title">Consciência Situacional e Soberania Cognitiva</h1>
+    <div class="article-meta">
+      <div class="article-author">
+        <div class="author-photo">FS</div>
+        <div class="author-info">
+          <div class="author-name">Filipe de Siqueira</div>
+          <div class="author-role">CEH · CPTE · CNSE · CSAE · Projeto Radix Cyber</div>
+        </div>
+      </div>
+      <div class="article-date">Maio de 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- CORPO -->
+<div class="article-body">
+
+  <p>Na doutrina militar, perder a <strong>consciência situacional</strong> em campo é uma das falhas mais perigosas que pode assolar um comandante. Não porque faltam dados — mas porque faltou compreensão do que os dados significavam.</p>
+
+  <p>Em sua dissertação de mestrado pelo PPCA/UnB, Cleber Mitchell de Lima define consciência situacional cibernética como o elo primordial da defesa cibernética — e a fundamenta nos três passos de Endsley: <strong>percepção, compreensão e projeção</strong>. Não existe a terceira sem as duas primeiras.</p>
+
+  <h2>O que o Haiti me ensinou sobre dashboards</h2>
+
+  <p>No Haiti, trabalhamos com ferramentas de visualização que unificavam o que havia sido implementado. Mas o que tornava aquele dashboard útil era o processo manual que o antecedia. O operador sabia o que estava sendo observado, quais ativos estavam em escopo, o que cada dado significava.</p>
+
+  <p>O dashboard era a superfície. A consciência situacional real estava no processo que o construiu.</p>
+
+  <p>Essa distinção parece óbvia quando você viveu os dois lados. Deixa de ser óbvia quando o profissional foi formado diretamente na camada da superfície — sem nunca ter precisado construir o que está por baixo.</p>
+
+  <h2>A pergunta que ainda não tem resposta consolidada</h2>
+
+  <p>A automação por IA tende a comprimir as etapas de percepção e compreensão em caixas pretas, entregando diretamente a projeção. Quando isso acontece, o operador ainda constrói consciência situacional real — ou apenas acessa um output que não consegue questionar?</p>
+
+  <blockquote>
+    <p>Chamo isso de perda de soberania cognitiva: a condição em que uma organização ou país não apenas depende de ferramentas externas, mas perde progressivamente a capacidade de questionar as premissas e os critérios que essas ferramentas usam para decidir.</p>
+  </blockquote>
+
+  <p>Se estivermos formando operadores que só consomem o resultado sem entender o processo — a soberania cognitiva sobre nossos próprios sistemas de defesa está sendo transferida para quem os desenvolveu.</p>
+
+  <h2>O risco estratégico que não aparece nos relatórios</h2>
+
+  <p>Frameworks de GRC tradicionais mapeiam falhas técnicas com precisão crescente. Mas há uma categoria de falha que ainda não tem métrica estabelecida: a <strong>falha de formação disfarçada de eficiência</strong>.</p>
+
+  <p>Os relatórios existem. Os processos rodam. Os dashboards ficam verdes. Mas o profissional que assina aquilo nunca precisou entender profundamente o que está por baixo. O gestor não questiona o relatório porque não tem os instrumentos para fazê-lo. O CISO toma decisões estratégicas baseadas em outputs que ninguém na equipe sabe interpretar criticamente.</p>
+
+  <p>Essa cadeia não aparece como vulnerabilidade em nenhuma varredura automatizada. Mas ela existe — e cresce silenciosamente à medida que a automação avança.</p>
+
+  <h2>O que precisamos preservar</h2>
+
+  <p>A resposta não é rejeitar a automação. É garantir que as etapas de percepção e compreensão de Endsley sejam protegidas — como competências humanas deliberadamente cultivadas, não como etapas descartáveis em nome da velocidade.</p>
+
+  <p>Um sistema de defesa cibernética é tão soberano quanto a capacidade dos seus operadores de questionar o que ele produz. Quando essa capacidade é delegada às ferramentas, o que resta não é soberania — é dependência com aparência de eficiência.</p>
+
+  <p>Não tenho a resposta definitiva. Mas considero a pergunta urgente o suficiente para não deixá-la sem investigação.</p>
+
+  <div class="engagement">
+    <p>Sua organização tem dados. Mas tem consciência situacional — ou só tem dashboard?</p>
+  </div>
+
+  <div class="article-tags">
+    <span class="article-tag-item">#DefesaCibernética</span>
+    <span class="article-tag-item">#ConsciênciaSituacional</span>
+    <span class="article-tag-item">#SoberaniaCibernética</span>
+    <span class="article-tag-item">#InteligênciaArtificial</span>
+    <span class="article-tag-item">#GRC</span>
+    <span class="article-tag-item">#CibersegurançaBrasileira</span>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="article-cta">
+  <a href="../blog.html" class="btn-primary">← Voltar ao Blog</a>
+  <a href="https://www.linkedin.com/in/filipedesiqueira" target="_blank" class="btn-outline">Seguir no LinkedIn ↗</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ RADIX CYBER</div>
+    <div class="footer-copy">filipedesiqueira.github.io · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
