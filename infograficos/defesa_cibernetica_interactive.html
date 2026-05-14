@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defesa Cibernética — Arcabouço Regulatório</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #f4f6f9;
+  --bg2:        #edf0f5;
+  --surface:    #ffffff;
+  --surface2:   #f8fafc;
+  --navy:       #0d1f3c;
+  --navy2:      #152b50;
+  --blue:       #1a5fa8;
+  --blue2:      #2272c3;
+  --blue-lt:    #4a90d9;
+  --blue-pale:  #dceeff;
+  --red:        #c0392b;
+  --red-pale:   #fdecea;
+  --green-mil:  #1e4d2b;
+  --green:      #2d7a45;
+  --green-lt:   #3da85e;
+  --green-pale: #e6f5ec;
+  --amber:      #b06a00;
+  --amber-lt:   #e08a10;
+  --amber-pale: #fff3dc;
+  --silver:     #4a6075;
+  --silver-lt:  #6a8090;
+  --silver-pale:#eef2f5;
+  --text:       #0d1f3c;
+  --text2:      #2d4a65;
+  --text3:      #5a7a92;
+  --text4:      #8aa0b2;
+  --border:     #d0dae8;
+  --border2:    #e2eaf3;
+  --chain:      #ff3b30;
+  --chain-pale: #fff0ef;
+  --page-w:     794px;
+  --transition: 380ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── RESET & BODY ─────────────────────────────── */
+body {
+  background: #d8dfe9;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(26,95,168,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(45,122,69,0.06) 0%, transparent 60%);
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px 80px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ─── OUTER SHELL ───────────────────────────────── */
+.shell {
+  width: var(--page-w);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── PAGE CARD ─────────────────────────────────── */
+.page {
+  width: 100%;
+  background: var(--surface);
+  box-shadow: 0 4px 48px rgba(13,31,60,0.16), 0 1px 4px rgba(13,31,60,0.08);
+  border-radius: 2px;
+  overflow: visible;
+  position: relative;
+  /* Entry animation */
+  animation: pageIn 0.6s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── TOP BAR ───────────────────────────────────── */
+.top-bar {
+  height: 5px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--blue) 40%, var(--green) 100%);
+  border-radius: 2px 2px 0 0;
+  animation: barGrow 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+  transform-origin: left;
+}
+@keyframes barGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ─── HEADER ────────────────────────────────────── */
+.header {
+  padding: 28px 36px 20px;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,144,217,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.header-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+  animation: fadeUp 0.5s 0.2s both;
+}
+.header-title {
+  font-size: 20px; font-weight: 700;
+  color: #fff; line-height: 1.25;
+  letter-spacing: -0.3px;
+  animation: fadeUp 0.5s 0.25s both;
+}
+.header-title em { font-style: normal; color: #4a90d9; }
+.header-subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; color: rgba(255,255,255,0.35);
+  margin-top: 8px; letter-spacing: 1px;
+  animation: fadeUp 0.5s 0.3s both;
+}
+.header-badge { flex-shrink: 0; text-align: right; animation: fadeUp 0.5s 0.35s both; }
+.badge-name { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; color: #fff; letter-spacing: 1.5px; }
+.badge-role { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+.badge-tags { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; }
+.badge-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px; padding: 2px 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.45); letter-spacing: 1px;
+}
+.badge-tag.hl { border-color: var(--red); color: #ff6b63; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── NAV TABS ──────────────────────────────────── */
+.nav-tabs {
+  display: flex;
+  background: var(--navy2);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 36px;
+  gap: 0;
+  position: relative;
+}
+.nav-tab {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 10px 14px 9px;
+  cursor: pointer;
+  border: none; background: none;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+  user-select: none;
+}
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--blue-lt);
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.nav-tab:hover { color: rgba(255,255,255,0.7); }
+.nav-tab.active { color: #fff; }
+.nav-tab.active::after { transform: scaleX(1); }
+.nav-tab .tab-num {
+  color: rgba(255,255,255,0.2);
+  margin-right: 5px;
+  font-size: 7px;
+}
+
+/* ─── SECTION PANELS ────────────────────────────── */
+.panels {
+  position: relative;
+  overflow: hidden;
+}
+.panel {
+  display: none;
+  padding: 24px 36px;
+  animation: panelIn 0.32s cubic-bezier(0.4,0,0.2,1) both;
+}
+.panel.active { display: block; }
+.panel.slide-left  { animation: slideLeft  0.32s cubic-bezier(0.4,0,0.2,1) both; }
+.panel.slide-right { animation: slideRight 0.32s cubic-bezier(0.4,0,0.2,1) both; }
+
+@keyframes panelIn    { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideLeft  { from { opacity:0; transform:translateX(28px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideRight { from { opacity:0; transform:translateX(-28px); } to { opacity:1; transform:translateX(0); } }
+
+/* ─── SECTION HEADER ────────────────────────────── */
+.sec-head {
+  display: flex; align-items: center;
+  gap: 8px; margin-bottom: 14px;
+}
+.sec-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; color: var(--text4); letter-spacing: 1px;
+}
+.sec-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 3px; color: var(--text3);
+  text-transform: uppercase;
+}
+.sec-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ─── PYRAMID ───────────────────────────────────── */
+.pyramid-wrap { display: flex; flex-direction: column; gap: 5px; }
+
+.pyr-level {
+  display: flex; align-items: stretch; gap: 10px; position: relative;
+  animation: fadeUp 0.4s both;
+}
+.pyr-level:nth-child(1) { animation-delay: 0.05s; }
+.pyr-level:nth-child(2) { animation-delay: 0.10s; }
+.pyr-level:nth-child(3) { animation-delay: 0.15s; }
+.pyr-level:nth-child(4) { animation-delay: 0.20s; }
+
+.pyr-level:not(:last-child)::after {
+  content: '▼';
+  position: absolute; left: 22px; bottom: -14px;
+  font-size: 8px; color: var(--border);
+  z-index: 2; transform: translateX(-50%);
+}
+.pyr-marker {
+  width: 44px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  padding-top: 12px; gap: 3px;
+}
+.pyr-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid; flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pyr-level:hover .pyr-dot {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.4);
+}
+.pyr-label-v {
+  font-family: 'IBM Plex Mono', monospace; font-size: 6px;
+  writing-mode: vertical-rl; text-orientation: mixed;
+  transform: rotate(180deg); letter-spacing: 2px;
+  color: var(--text4); text-transform: uppercase; margin-top: 4px;
+}
+.pyr-card {
+  flex: 1; border: 1px solid; border-radius: 3px;
+  padding: 11px 14px; position: relative; overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.pyr-card:hover { box-shadow: 0 2px 12px rgba(13,31,60,0.10); transform: translateX(2px); }
+.pyr-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.lvl-p .pyr-dot  { border-color: var(--green-lt); background: var(--green-pale); }
+.lvl-p .pyr-label-v { color: var(--green); }
+.lvl-p .pyr-card { background: var(--green-pale); border-color: #b8ddc4; }
+.lvl-p .pyr-card::before { background: var(--green); }
+.lvl-p .pyr-tag  { color: var(--green); border-color: #9acfaa; background: #fff; }
+.lvl-p .pyr-inst { color: var(--green-mil); }
+.lvl-e .pyr-dot  { border-color: var(--amber-lt); background: var(--amber-pale); }
+.lvl-e .pyr-label-v { color: var(--amber); }
+.lvl-e .pyr-card { background: var(--amber-pale); border-color: #f0d090; }
+.lvl-e .pyr-card::before { background: var(--amber-lt); }
+.lvl-e .pyr-tag  { color: var(--amber); border-color: #e0b860; background: #fff; }
+.lvl-e .pyr-inst { color: var(--amber); }
+.lvl-o .pyr-dot  { border-color: var(--blue2); background: var(--blue-pale); }
+.lvl-o .pyr-label-v { color: var(--blue); }
+.lvl-o .pyr-card { background: var(--blue-pale); border-color: #aacfee; }
+.lvl-o .pyr-card::before { background: var(--blue2); }
+.lvl-o .pyr-tag  { color: var(--blue); border-color: #90bce0; background: #fff; }
+.lvl-o .pyr-inst { color: var(--navy2); }
+.lvl-t .pyr-dot  { border-color: var(--silver-lt); background: var(--silver-pale); }
+.lvl-t .pyr-label-v { color: var(--silver); }
+.lvl-t .pyr-card { background: var(--silver-pale); border-color: #c8d8e4; }
+.lvl-t .pyr-card::before { background: var(--silver); }
+.lvl-t .pyr-tag  { color: var(--silver); border-color: #b0c8d8; background: #fff; }
+.lvl-t .pyr-inst { color: var(--navy2); }
+.pyr-tag {
+  font-family: 'IBM Plex Mono', monospace; font-size: 7px;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: 1px solid; padding: 1px 6px;
+  display: inline-block; margin-bottom: 5px; border-radius: 1px;
+}
+.pyr-inst { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.pyr-docs { font-size: 10px; color: var(--text2); line-height: 1.6; }
+
+/* ─── CHAIN DOC BADGE ───────────────────────────── */
+.chain-doc {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  color: var(--red); background: var(--chain-pale);
+  border: 1px solid #f5b8b4; border-radius: 2px;
+  padding: 1px 5px; margin: 1px 2px;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  cursor: default;
+}
+.chain-doc::before { content: '★'; font-size: 7px; }
+.chain-doc:hover, a:hover .chain-doc {
+  background: #ffe0de;
+  border-color: var(--red);
+  transform: translateY(-1px);
+}
+
+/* ─── DOC LINK ──────────────────────────────────── */
+.doc-link {
+  color: inherit; text-decoration: none;
+  border-bottom: 1px dotted var(--border);
+  transition: border-color 0.15s, color 0.15s;
+}
+.doc-link:hover { border-bottom-color: var(--blue); color: var(--blue); }
+
+/* ─── TIMELINE ──────────────────────────────────── */
+.tl-wrap { position: relative; padding-bottom: 4px; }
+.tl-line {
+  position: absolute; top: 10px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border2), var(--border), var(--green-lt), var(--border2));
+}
+.tl-items { display: flex; justify-content: space-between; position: relative; }
+.tl-item {
+  display: flex; flex-direction: column; align-items: center;
+  flex: 1; cursor: default;
+}
+.tl-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--blue-lt);
+  flex-shrink: 0; position: relative; z-index: 2;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tl-item:hover .tl-dot { transform: scale(1.5); box-shadow: 0 0 0 3px rgba(74,144,217,0.2); }
+.tl-dot.chain { border-color: var(--red); background: var(--chain-pale); }
+.tl-item:hover .tl-dot.chain { box-shadow: 0 0 0 3px rgba(192,57,43,0.15); }
+.tl-dot.now   { border-color: var(--green-lt); background: var(--green-pale); box-shadow: 0 0 0 3px rgba(61,168,94,0.15); animation: pulse 2s infinite; }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(61,168,94,0.15); }
+  50%      { box-shadow: 0 0 0 6px rgba(61,168,94,0.08); }
+}
+.tl-year {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; font-weight: 700; color: var(--blue); margin-top: 5px;
+  transition: color 0.2s;
+}
+.tl-item:hover .tl-year { color: var(--navy); }
+.tl-year.now { color: var(--green); }
+.tl-doc { font-size: 7.5px; color: var(--text3); text-align: center; margin-top: 2px; line-height: 1.4; padding: 0 1px; }
+.tl-doc strong { display: block; color: var(--text2); font-weight: 600; font-size: 8px; }
+.tl-doc.chain-item strong { color: var(--red); }
+
+/* Staggered timeline animation */
+.tl-item { animation: fadeUp 0.4s both; }
+.tl-item:nth-child(1) { animation-delay: 0.04s; }
+.tl-item:nth-child(2) { animation-delay: 0.08s; }
+.tl-item:nth-child(3) { animation-delay: 0.12s; }
+.tl-item:nth-child(4) { animation-delay: 0.16s; }
+.tl-item:nth-child(5) { animation-delay: 0.20s; }
+.tl-item:nth-child(6) { animation-delay: 0.24s; }
+.tl-item:nth-child(7) { animation-delay: 0.28s; }
+.tl-item:nth-child(8) { animation-delay: 0.32s; }
+
+/* ─── DOCS TABLE ────────────────────────────────── */
+.docs-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+.docs-table th {
+  font-family: 'IBM Plex Mono', monospace; font-size: 7px;
+  letter-spacing: 1.5px; color: var(--text4); text-align: left;
+  padding: 5px 8px; background: var(--bg2);
+  border-bottom: 1px solid var(--border); font-weight: 600;
+}
+.docs-table td {
+  padding: 6px 8px; border-bottom: 1px solid var(--border2);
+  vertical-align: top; color: var(--text2); line-height: 1.4;
+  transition: background 0.15s;
+}
+.docs-table tr:last-child td { border-bottom: none; }
+.docs-table tbody tr {
+  animation: fadeUp 0.35s both;
+  cursor: default;
+}
+.docs-table tbody tr:nth-child(1) { animation-delay: 0.03s; }
+.docs-table tbody tr:nth-child(2) { animation-delay: 0.06s; }
+.docs-table tbody tr:nth-child(3) { animation-delay: 0.09s; }
+.docs-table tbody tr:nth-child(4) { animation-delay: 0.12s; }
+.docs-table tbody tr:nth-child(5) { animation-delay: 0.15s; }
+.docs-table tbody tr:nth-child(6) { animation-delay: 0.18s; }
+.docs-table tbody tr:nth-child(7) { animation-delay: 0.21s; }
+.docs-table tbody tr:nth-child(8) { animation-delay: 0.24s; }
+.docs-table tbody tr:nth-child(9) { animation-delay: 0.27s; }
+.docs-table tbody tr:nth-child(10){ animation-delay: 0.30s; }
+.docs-table tbody tr:hover td { background: var(--bg2); }
+.doc-id { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 700; white-space: nowrap; }
+.doc-id.chain { color: var(--red); }
+.doc-id.blue  { color: var(--blue); }
+.doc-star { color: var(--red); font-size: 9px; margin-right: 2px; }
+.doc-nivel {
+  font-family: 'IBM Plex Mono', monospace; font-size: 7.5px;
+  padding: 1px 5px; border-radius: 1px; border: 1px solid; white-space: nowrap;
+}
+.doc-nivel.p { color: var(--green); border-color: #9acfaa; background: var(--green-pale); }
+.doc-nivel.e { color: var(--amber); border-color: #e0b860; background: var(--amber-pale); }
+.doc-nivel.o { color: var(--blue);  border-color: #90bce0; background: var(--blue-pale); }
+
+/* ─── LEGEND ────────────────────────────────────── */
+.legend-wrap { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.legend-item {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 8px; border: 1px solid var(--border2);
+  border-radius: 2px; background: var(--surface2);
+  animation: fadeUp 0.4s both;
+  transition: border-color 0.2s, background 0.2s;
+}
+.legend-item:nth-child(1) { animation-delay: 0.05s; }
+.legend-item:nth-child(2) { animation-delay: 0.10s; }
+.legend-item:nth-child(3) { animation-delay: 0.15s; }
+.legend-item:nth-child(4) { animation-delay: 0.20s; }
+.legend-item:hover { border-color: var(--border); background: var(--bg2); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-text { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; color: var(--text3); letter-spacing: 0.5px; }
+.legend-chain {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 8px; border: 1px solid #f5b8b4;
+  border-radius: 2px; background: var(--chain-pale);
+  animation: fadeUp 0.4s 0.25s both;
+}
+.legend-chain-icon { font-size: 9px; color: var(--red); }
+.legend-chain-text { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; color: var(--red); letter-spacing: 0.5px; font-weight: 700; }
+
+/* ─── FOOTER ────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 0 36px; }
+.footer {
+  background: var(--navy);
+  padding: 12px 36px;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px;
+  border-radius: 0 0 2px 2px;
+}
+.footer-frameworks {
+  font-family: 'IBM Plex Mono', monospace; font-size: 7.5px;
+  color: rgba(255,255,255,0.3); letter-spacing: 0.5px; line-height: 1.6;
+}
+.footer-frameworks span { color: rgba(255,255,255,0.5); font-weight: 600; }
+.footer-right { text-align: right; flex-shrink: 0; }
+.footer-source { font-family: 'IBM Plex Mono', monospace; font-size: 7px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; }
+.footer-radix { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 2px; margin-top: 3px; }
+.footer-radix .r { color: #ff3b30; }
+.footer-radix .c { color: #4a90d9; }
+
+/* ─── NAVIGATION ARROWS ─────────────────────────── */
+.nav-arrows {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 10;
+}
+.nav-arrow {
+  position: absolute;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+  font-size: 14px;
+  box-shadow: 0 2px 12px rgba(13,31,60,0.25);
+  opacity: 0.85;
+}
+.nav-arrow:hover {
+  background: var(--blue);
+  transform: scale(1.08);
+  opacity: 1;
+  box-shadow: 0 4px 20px rgba(26,95,168,0.35);
+}
+.nav-arrow:active { transform: scale(0.96); }
+.nav-arrow.prev { left: -48px; }
+.nav-arrow.next { right: -48px; }
+.nav-arrow.disabled { opacity: 0.2; pointer-events: none; }
+
+/* ─── KEYBOARD HINT ─────────────────────────────── */
+.kbd-hint {
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: rgba(13,31,60,0.35);
+  letter-spacing: 1px;
+  animation: fadeUp 0.6s 0.8s both;
+}
+.kbd { display: inline-block; background: rgba(13,31,60,0.08); border: 1px solid rgba(13,31,60,0.15); border-radius: 3px; padding: 1px 5px; font-size: 9px; }
+
+/* ─── PROGRESS DOTS ─────────────────────────────── */
+.progress-dots {
+  display: flex; justify-content: center;
+  gap: 6px; margin-top: 12px;
+  animation: fadeUp 0.5s 0.7s both;
+}
+.prog-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(13,31,60,0.18);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.prog-dot.active {
+  background: var(--blue);
+  transform: scale(1.3);
+}
+.prog-dot:hover { background: var(--blue2); transform: scale(1.2); }
+
+/* ─── TOOLTIP / BALLOON ─────────────────────────── */
+.tooltip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s, transform 0.18s;
+  transform: translateY(4px);
+  max-width: 260px;
+}
+.tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tooltip-inner {
+  background: var(--navy);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 10px 13px;
+  box-shadow: 0 8px 32px rgba(13,31,60,0.32), 0 2px 8px rgba(13,31,60,0.18);
+  position: relative;
+}
+.tooltip-inner::before {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 10px;
+  background: var(--navy);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  transform: translateX(-50%) rotate(45deg);
+}
+.tooltip-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px; font-weight: 700;
+  color: var(--red); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 5px;
+}
+.tooltip-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  color: #fff; margin-bottom: 5px; letter-spacing: 0.3px;
+}
+.tooltip-desc {
+  font-size: 10px; color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+}
+.tooltip-year {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; color: var(--blue-lt);
+  margin-top: 6px; letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- NAV ARROWS (outside the page) -->
+  <div class="nav-arrows">
+    <button class="nav-arrow prev" id="btnPrev" onclick="navigate(-1)" title="Seção anterior (← ou ↑)">&#8592;</button>
+    <button class="nav-arrow next" id="btnNext" onclick="navigate(1)"  title="Próxima seção (→ ou ↓)">&#8594;</button>
+  </div>
+
+  <div class="page">
+    <!-- TOP BAR -->
+    <div class="top-bar"></div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-row">
+        <div class="header-left">
+          <div class="header-eyebrow">// RADIX CYBER · INTELIGÊNCIA REGULATÓRIA · 2025</div>
+          <div class="header-title">Defesa Cibernética no Brasil —<br><em>Arcabouço Regulatório e Institucional</em></div>
+          <div class="header-subtitle">ESTRUTURA NORMATIVA · CADEIA DE COMANDO · MARCOS TEMPORAIS</div>
+        </div>
+        <div class="header-badge">
+          <div class="badge-name">FILIPE SIQUEIRA</div>
+          <div class="badge-role">Deputy CISO · ComDCiber</div>
+          <div class="badge-tags">
+            <div class="badge-tag hl">RADIX CYBER</div>
+            <div class="badge-tag">REV. 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV TABS -->
+    <nav class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" data-panel="0" onclick="goTo(0)"><span class="tab-num">01</span>Pirâmide</button>
+      <button class="nav-tab"        data-panel="1" onclick="goTo(1)"><span class="tab-num">02</span>Linha do Tempo</button>
+      <button class="nav-tab"        data-panel="2" onclick="goTo(2)"><span class="tab-num">03</span>Documentos</button>
+      <button class="nav-tab"        data-panel="3" onclick="goTo(3)"><span class="tab-num">04</span>Legenda</button>
+    </nav>
+
+    <!-- PANELS -->
+    <div class="panels">
+
+      <!-- ── PANEL 0: PIRÂMIDE ── -->
+      <div class="panel active" id="panel-0">
+        <div class="sec-head">
+          <span class="sec-num">01</span>
+          <span class="sec-title">Pirâmide de Níveis de Comando</span>
+          <div class="sec-line"></div>
+        </div>
+        <div class="pyramid-wrap">
+
+          <div class="pyr-level lvl-p">
+            <div class="pyr-marker">
+              <div class="pyr-dot"></div>
+              <div class="pyr-label-v">Político</div>
+            </div>
+            <div class="pyr-card">
+              <div class="pyr-tag">Nível Político</div>
+              <div class="pyr-inst">Presidência da República / GSI</div>
+              <div class="pyr-docs">
+                <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/d11856.htm" target="_blank" class="doc-link"
+                   data-tip="PNCiber" data-year="Decreto 11.856 · 2023"
+                   data-desc="Institui a Política Nacional de Cibersegurança, orientando as ações estratégicas do Brasil no campo da segurança cibernética. Cria o Comitê Nacional de Cibersegurança (CNCiber), presidido pelo GSI/PR.">
+                  <span class="chain-doc">PNCiber</span></a> Política Nacional de Cibersegurança &nbsp;·&nbsp;
+                <a href="https://www.gov.br/gsi/pt-br/assuntos/seguranca-da-informacao-e-cibernetica/estrategia-nacional-de-ciberseguranca-eciber" target="_blank" class="doc-link"
+                   data-tip="E-Ciber" data-year="Decreto 12.573 · 2025"
+                   data-desc="Nova Estratégia Nacional de Cibersegurança, com 4 eixos temáticos e ~40 ações estratégicas. Substitui a versão de 2020 e é considerada de 3ª geração no cenário internacional.">
+                  <span class="chain-doc">E-Ciber</span></a> Estratégia Nacional de Cibersegurança &nbsp;·&nbsp;
+                <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9637.htm" target="_blank" class="doc-link"
+                   data-tip="PNSI" data-year="Decreto 9.637 · 2018"
+                   data-desc="Política Nacional de Segurança da Informação. Abrange segurança cibernética, defesa cibernética, segurança física e proteção de dados organizacionais na Administração Pública Federal.">
+                  <span class="chain-doc">PNSI</span></a> Política Nacional de Segurança da Informação
+              </div>
+            </div>
+          </div>
+
+          <div class="pyr-level lvl-e">
+            <div class="pyr-marker">
+              <div class="pyr-dot"></div>
+              <div class="pyr-label-v">Estratégico</div>
+            </div>
+            <div class="pyr-card">
+              <div class="pyr-tag">Nível Estratégico</div>
+              <div class="pyr-inst">Ministério da Defesa / EMCFA</div>
+              <div class="pyr-docs">
+                <a href="https://www.gov.br/defesa/pt-br/assuntos/copy_of_estado-e-defesa/estrategia-nacional-de-defesa" target="_blank" class="doc-link"
+                   data-tip="END" data-year="2008 · rev. 2016"
+                   data-desc="Estratégia Nacional de Defesa. Lançada em 2008 e revisada em 2012 e 2016, define o setor cibernético como um dos três setores estratégicos do País, ao lado do nuclear e do espacial.">
+                  <span class="chain-doc">END</span></a> Estratégia Nacional de Defesa &nbsp;·&nbsp;
+                <a href="https://www.defesa.gov.br/arquivos/File/legislacao/emcfa/publicacoes/md31_p_02_politica_cibernetica_de_defesa.pdf" target="_blank" class="doc-link"
+                   data-tip="MD31-P-02" data-year="Port. Norm. 3.389/MD · 2012"
+                   data-desc="Política Cibernética de Defesa. Orienta as atividades de Defesa Cibernética no nível estratégico e de Guerra Cibernética nos níveis operacional e tático, dentro do Ministério da Defesa.">
+                  <span class="chain-doc">MD31-P-02</span></a> Política Cibernética de Defesa &nbsp;·&nbsp;
+                <a href="https://www.in.gov.br/en/web/dou/-/portaria-n-3.781-de-17-de-novembro-de-2020" target="_blank" class="doc-link"
+                   data-tip="Port. SMDC 3.781/2020" data-year="Portaria GM-MD · 2020"
+                   data-desc="Cria o Sistema Militar de Defesa Cibernética (SMDC), com o ComDCiber como órgão central. Define as atribuições, organização e competências das componentes do sistema.">
+                  <span class="chain-doc">Port. SMDC 3.781/2020</span></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pyr-level lvl-o">
+            <div class="pyr-marker">
+              <div class="pyr-dot"></div>
+              <div class="pyr-label-v">Operacional</div>
+            </div>
+            <div class="pyr-card">
+              <div class="pyr-tag">Nível Operacional</div>
+              <div class="pyr-inst">ComDCiber — Comando de Defesa Cibernética</div>
+              <div class="pyr-docs">
+                <a href="https://www.gov.br/defesa/pt-br/assuntos/estado-maior-conjunto-das-forcas-armadas/doutrina-militar/publicacoes-1/publicacoes/MD31M07DoutrinaMilitardeDefesaCiberntica2Edio2023.pdf" target="_blank" class="doc-link"
+                   data-tip="MD31-M-07" data-year="2ª Edição · 2023"
+                   data-desc="Doutrina Militar de Defesa Cibernética. Principal publicação doutrinária do setor. Define conceitos, princípios, estrutura de comando e nível de emprego do poder cibernético militar.">
+                  <span class="chain-doc">MD31-M-07</span></a> Doutrina Militar de Def. Cibernética &nbsp;·&nbsp;
+                <a href="https://www.gov.br/defesa/pt-br/noticias/escola-nacional-de-defesa-cibernetica-e-inaugurada-em-brasilia" target="_blank" class="doc-link"
+                   data-tip="ECS/Def" data-year="Inaugurada · 2019"
+                   data-desc="Escola de Ciber Segurança de Defesa (ex-ENaDCiber). Responsável pela formação técnica e capacitação de pessoal militar e civil em defesa cibernética, localizada em Brasília.">
+                  <span class="chain-doc">ECS/Def</span></a> Escola de Ciber Segurança de Defesa &nbsp;·&nbsp;
+                <a href="https://www.gov.br/defesa/pt-br/assuntos/estado-maior-conjunto-das-forcas-armadas/doutrina-militar/publicacoes-1/publicacoes/MD31M07DoutrinaMilitardeDefesaCiberntica2Edio2023.pdf#page=60" target="_blank" class="doc-link"
+                   data-tip="ReGIC" data-year="Estrutura do SMDC"
+                   data-desc="Rede de Gestão de Incidentes Cibernéticos de Defesa. Coordenada pelo ComDCiber, consolida notificações de incidentes das Forças Singulares e ETIRs relacionadas ao Setor Defesa.">
+                  <span class="chain-doc">ReGIC</span></a> Rede de Gestão de Incidentes de Defesa
+              </div>
+            </div>
+          </div>
+
+          <div class="pyr-level lvl-t">
+            <div class="pyr-marker">
+              <div class="pyr-dot"></div>
+              <div class="pyr-label-v">Tático</div>
+            </div>
+            <div class="pyr-card">
+              <div class="pyr-tag">Nível Tático</div>
+              <div class="pyr-inst">Forças Componentes — SMDC</div>
+              <div class="pyr-docs">
+                <span class="chain-doc" data-tip="Estrutura Cib. MB" data-year="Marinha do Brasil" data-desc="Estrutura Cibernética da Marinha do Brasil. Componente tático do SMDC responsável pelas ações de guerra cibernética no âmbito naval.">Estrutura Cib. MB</span> Marinha do Brasil &nbsp;·&nbsp;
+                <span class="chain-doc" data-tip="CDCAer/FAB" data-year="Força Aérea Brasileira" data-desc="Centro de Defesa Cibernética da Aeronáutica. Componente tático do SMDC responsável pela guerra cibernética no domínio aéreo e espacial.">CDCAer/FAB</span> Centro de Def. Cibernética · Aeronáutica &nbsp;·&nbsp;
+                <span class="chain-doc" data-tip="F Cj G Ciber" data-year="Forças Conjuntas" data-desc="Forças Conjuntas de Guerra Cibernética. Estrutura de emprego tático conjunto ativada em cenários operacionais, integrando as capacidades cibernéticas das três Forças Singulares.">F Cj G Ciber</span> Forças Conjuntas de Guerra Cibernética
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /panel-0 -->
+
+      <!-- ── PANEL 1: LINHA DO TEMPO ── -->
+      <div class="panel" id="panel-1">
+        <div class="sec-head">
+          <span class="sec-num">02</span>
+          <span class="sec-title">Marcos Regulatórios · 2008 → 2025</span>
+          <div class="sec-line"></div>
+        </div>
+        <div class="tl-wrap">
+          <div class="tl-line"></div>
+          <div class="tl-items">
+
+            <div class="tl-item"
+                 data-tip="END" data-year="2008"
+                 data-desc="Estratégia Nacional de Defesa. Define o setor cibernético como área estratégica, ao lado do nuclear e do espacial. Marco fundador da política de defesa cibernética brasileira.">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2008</div>
+              <div class="tl-doc"><a href="https://www.gov.br/defesa/pt-br/assuntos/copy_of_estado-e-defesa/estrategia-nacional-de-defesa" target="_blank" class="doc-link"><strong>END</strong></a>Estratégia Nac. de Defesa</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="MD31-P-02" data-year="2012"
+                 data-desc="Política Cibernética de Defesa. Primeiro documento doutrinário específico do MD para o setor cibernético. Orienta Defesa Cibernética (estratégico) e Guerra Cibernética (operacional/tático).">
+              <div class="tl-dot chain"></div>
+              <div class="tl-year">2012</div>
+              <div class="tl-doc chain-item"><a href="https://www.defesa.gov.br/arquivos/File/legislacao/emcfa/publicacoes/md31_p_02_politica_cibernetica_de_defesa.pdf" target="_blank" class="doc-link"><strong>MD31-P-02</strong></a>Política Cibernética de Defesa</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="Port. 2.777/MD" data-year="2014"
+                 data-desc="Portaria que define a diretriz de implantação do ComDCiber e da ENaDCiber na estrutura do Ministério da Defesa. Marca o início institucional da organização cibernética militar.">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2014</div>
+              <div class="tl-doc"><a href="https://www.defesanet.com.br/cyberwar/noticia/19850/md-pn-2777-diretriz-de-implantacao-de-medidas-visando-a-potencializacao-da-defesa-cibernetica-nacional/" target="_blank" class="doc-link"><strong>Port. 2.777/MD</strong></a>Regulamentação SMDC</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="ComDCiber" data-year="2016"
+                 data-desc="Ativação formal do Comando de Defesa Cibernética (ComDCiber). Passa a ser o órgão central do setor cibernético militar, integrado por oficiais e praças das três Forças Singulares.">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2016</div>
+              <div class="tl-doc"><a href="https://www.gov.br/defesa/pt-br/noticias/ministerio-da-defesa-ativa-o-comando-de-defesa-cibernetica" target="_blank" class="doc-link"><strong>ComDCiber</strong></a>Ativação do Comando</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="PNSI" data-year="2018"
+                 data-desc="Decreto 9.637 institui a Política Nacional de Segurança da Informação. Inclui segurança cibernética e defesa cibernética como dimensões da segurança da informação em âmbito nacional.">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2018</div>
+              <div class="tl-doc"><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9637.htm" target="_blank" class="doc-link"><strong>PNSI</strong></a>Pol. Nac. de Seg. da Informação</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="Port. 3.781/SMDC" data-year="2020"
+                 data-desc="Cria formalmente o Sistema Militar de Defesa Cibernética (SMDC), com o ComDCiber como órgão central permanentemente ativado. Define atribuições e estrutura de todas as componentes.">
+              <div class="tl-dot chain"></div>
+              <div class="tl-year">2020</div>
+              <div class="tl-doc chain-item"><a href="https://www.in.gov.br/en/web/dou/-/portaria-n-3.781-de-17-de-novembro-de-2020" target="_blank" class="doc-link"><strong>Port. 3.781/SMDC</strong></a>Atribuições e estrutura</div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="MD31-M-07 v2 + PNCiber" data-year="2023"
+                 data-desc="Publicação simultânea da 2ª edição da Doutrina Militar de Defesa Cibernética e da Política Nacional de Cibersegurança (Decreto 11.856/2023). Ano de maior produção normativa do setor.">
+              <div class="tl-dot chain"></div>
+              <div class="tl-year">2023</div>
+              <div class="tl-doc chain-item"><a href="https://www.gov.br/defesa/pt-br/assuntos/estado-maior-conjunto-das-forcas-armadas/doutrina-militar/publicacoes-1/publicacoes/MD31M07DoutrinaMilitardeDefesaCiberntica2Edio2023.pdf" target="_blank" class="doc-link"><strong>MD31-M-07 v2</strong></a>Doutrina + <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/d11856.htm" target="_blank" class="doc-link"><strong>PNCiber</strong></a></div>
+            </div>
+
+            <div class="tl-item"
+                 data-tip="E-Ciber 2025" data-year="2025"
+                 data-desc="Decreto 12.573/2025 institui a nova Estratégia Nacional de Cibersegurança (E-Ciber), estruturada em 4 eixos temáticos com ~40 ações estratégicas. Considerada estratégia de 3ª geração.">
+              <div class="tl-dot now"></div>
+              <div class="tl-year now">2025</div>
+              <div class="tl-doc"><a href="https://www.gov.br/gsi/pt-br/assuntos/seguranca-da-informacao-e-cibernetica/estrategia-nacional-de-ciberseguranca-eciber" target="_blank" class="doc-link"><strong style="color:var(--green);">E-Ciber</strong></a>Proj. Córtex</div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /panel-1 -->
+
+      <!-- ── PANEL 2: TABELA DOCS ── -->
+      <div class="panel" id="panel-2">
+        <div class="sec-head">
+          <span class="sec-num">03</span>
+          <span class="sec-title">10 Documentos Prioritários da Cadeia Militar</span>
+          <div class="sec-line"></div>
+        </div>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th style="width:28px;">#</th>
+              <th style="width:160px;">DOCUMENTO</th>
+              <th>DESCRIÇÃO</th>
+              <th style="width:90px;">NÍVEL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-tip="END" data-year="2008 · rev.2016" data-desc="Estratégia Nacional de Defesa. Define o setor cibernético como um dos três setores estratégicos do País. Diretriz política suprema para as Forças Armadas.">
+              <td><span class="doc-star">★</span>01</td>
+              <td><a href="https://www.gov.br/defesa/pt-br/assuntos/copy_of_estado-e-defesa/estrategia-nacional-de-defesa" target="_blank" class="doc-link"><span class="doc-id chain">END</span></a></td>
+              <td>Estratégia Nacional de Defesa — diretriz política suprema</td>
+              <td><span class="doc-nivel e">Estratégico</span></td>
+            </tr>
+            <tr data-tip="MD31-P-02" data-year="Port. Norm. 3.389/MD · 2012" data-desc="Política Cibernética de Defesa. Primeiro documento doutrinário específico do MD. Orienta Defesa Cibernética (estratégico) e Guerra Cibernética (operacional/tático).">
+              <td><span class="doc-star">★</span>02</td>
+              <td><a href="https://www.defesa.gov.br/arquivos/File/legislacao/emcfa/publicacoes/md31_p_02_politica_cibernetica_de_defesa.pdf" target="_blank" class="doc-link"><span class="doc-id chain">MD31-P-02</span></a></td>
+              <td>Política Cibernética de Defesa — fundamento doutrinário</td>
+              <td><span class="doc-nivel e">Estratégico</span></td>
+            </tr>
+            <tr data-tip="MD31-M-07" data-year="2ª Edição · 2023" data-desc="Doutrina Militar de Defesa Cibernética. Principal publicação doutrinária do setor. Define conceitos, princípios, níveis de emprego e estrutura do poder cibernético militar.">
+              <td><span class="doc-star">★</span>03</td>
+              <td><a href="https://www.gov.br/defesa/pt-br/assuntos/estado-maior-conjunto-das-forcas-armadas/doutrina-militar/publicacoes-1/publicacoes/MD31M07DoutrinaMilitardeDefesaCiberntica2Edio2023.pdf" target="_blank" class="doc-link"><span class="doc-id chain">MD31-M-07</span></a></td>
+              <td>Doutrina Militar de Defesa Cibernética — v2/2023</td>
+              <td><span class="doc-nivel o">Operacional</span></td>
+            </tr>
+            <tr data-tip="Port. SMDC 3.781/2020" data-year="Portaria GM-MD · 2020" data-desc="Cria o Sistema Militar de Defesa Cibernética (SMDC). Estabelece o ComDCiber como órgão central permanente e define atribuições e organização de todas as componentes do sistema.">
+              <td><span class="doc-star">★</span>04</td>
+              <td><a href="https://www.in.gov.br/en/web/dou/-/portaria-n-3.781-de-17-de-novembro-de-2020" target="_blank" class="doc-link"><span class="doc-id chain">Port. SMDC 3.781/2020</span></a></td>
+              <td>Atribuições, organização e competências do SMDC</td>
+              <td><span class="doc-nivel e">Estratégico</span></td>
+            </tr>
+            <tr data-tip="PNCiber" data-year="Decreto 11.856 · 2023" data-desc="Política Nacional de Cibersegurança. Institui o Comitê Nacional de Cibersegurança (CNCiber), presidido pelo GSI/PR, e define os princípios e objetivos da segurança cibernética nacional.">
+              <td><span class="doc-star">★</span>05</td>
+              <td><a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/d11856.htm" target="_blank" class="doc-link"><span class="doc-id blue">PNCiber</span></a></td>
+              <td>Política Nacional de Cibersegurança — Decreto 11.856/2023</td>
+              <td><span class="doc-nivel p">Político</span></td>
+            </tr>
+            <tr data-tip="E-Ciber" data-year="Decreto 12.573 · 2025" data-desc="Estratégia Nacional de Cibersegurança de 2ª geração, com 4 eixos temáticos: proteção do cidadão, resiliência de infraestruturas críticas, cooperação e soberania digital.">
+              <td><span class="doc-star">★</span>06</td>
+              <td><a href="https://www.gov.br/gsi/pt-br/assuntos/seguranca-da-informacao-e-cibernetica/estrategia-nacional-de-ciberseguranca-eciber" target="_blank" class="doc-link"><span class="doc-id blue">E-Ciber</span></a></td>
+              <td>Estratégia Nacional de Cibersegurança — Decreto 12.573/2025</td>
+              <td><span class="doc-nivel p">Político</span></td>
+            </tr>
+            <tr data-tip="PNSI" data-year="Decreto 9.637 · 2018" data-desc="Política Nacional de Segurança da Informação. Abrange segurança cibernética, defesa cibernética, segurança física e proteção de dados na Administração Pública Federal. Coordenada pelo GSI/PR.">
+              <td><span class="doc-star">★</span>07</td>
+              <td><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/decreto/d9637.htm" target="_blank" class="doc-link"><span class="doc-id blue">PNSI</span></a></td>
+              <td>Política Nacional de Segurança da Informação — Decreto 9.637/2018</td>
+              <td><span class="doc-nivel p">Político</span></td>
+            </tr>
+            <tr data-tip="ReGIC" data-year="Estrutura SMDC · ComDCiber" data-desc="Rede de Gestão de Incidentes Cibernéticos de Defesa. Coordenada pelo ComDCiber, integra ETIRs das Forças Singulares, do MD e de entidades relacionadas ao Setor Defesa.">
+              <td><span class="doc-star">★</span>08</td>
+              <td><a href="https://www.gov.br/defesa/pt-br/assuntos/estado-maior-conjunto-das-forcas-armadas/doutrina-militar/publicacoes-1/publicacoes/MD31M07DoutrinaMilitardeDefesaCiberntica2Edio2023.pdf#page=60" target="_blank" class="doc-link"><span class="doc-id chain">ReGIC</span></a></td>
+              <td>Rede de Gestão de Incidentes Cibernéticos de Defesa</td>
+              <td><span class="doc-nivel o">Operacional</span></td>
+            </tr>
+            <tr data-tip="ECS/Def" data-year="Inaugurada · 2019" data-desc="Escola de Ciber Segurança de Defesa (ex-ENaDCiber). Forma e capacita pessoal militar e civil em defesa cibernética. Localizada em Brasília, vinculada ao ComDCiber.">
+              <td><span class="doc-star">★</span>09</td>
+              <td><a href="https://www.gov.br/defesa/pt-br/noticias/escola-nacional-de-defesa-cibernetica-e-inaugurada-em-brasilia" target="_blank" class="doc-link"><span class="doc-id chain">ECS/Def</span></a></td>
+              <td>Escola de Ciber Segurança de Defesa — formação técnica</td>
+              <td><span class="doc-nivel o">Operacional</span></td>
+            </tr>
+            <tr data-tip="Port. 2.777/MD" data-year="Portaria · 2014" data-desc="Define a diretriz de implantação das medidas de potencialização da Defesa Cibernética Nacional. Determinou a criação do ComDCiber e da ENaDCiber na estrutura do Ministério da Defesa.">
+              <td><span class="doc-star">★</span>10</td>
+              <td><a href="https://www.defesanet.com.br/cyberwar/noticia/19850/md-pn-2777-diretriz-de-implantacao-de-medidas-visando-a-potencializacao-da-defesa-cibernetica-nacional/" target="_blank" class="doc-link"><span class="doc-id">Port. 2.777/MD</span></a></td>
+              <td>Regulamentação e criação do SMDC — 2014</td>
+              <td><span class="doc-nivel e">Estratégico</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /panel-2 -->
+
+      <!-- ── PANEL 3: LEGENDA ── -->
+      <div class="panel" id="panel-3">
+        <div class="sec-head">
+          <span class="sec-num">04</span>
+          <span class="sec-title">Legenda</span>
+          <div class="sec-line"></div>
+        </div>
+        <div class="legend-wrap">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div><span class="legend-text">Político — Presidência / GSI</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber-lt);"></div><span class="legend-text">Estratégico — MD / EMCFA</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--blue2);"></div><span class="legend-text">Operacional — ComDCiber</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--silver);"></div><span class="legend-text">Tático — Forças Componentes</span></div>
+          <div class="legend-chain"><span class="legend-chain-icon">★</span><span class="legend-chain-text">Cadeia Militar Prioritária</span></div>
+        </div>
+      </div><!-- /panel-3 -->
+
+    </div><!-- /panels -->
+
+    <div class="divider"></div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-frameworks">
+        <span>Frameworks internacionais de referência:</span><br>
+        <a href="https://www.nist.gov/cyberframework" target="_blank" class="doc-link" style="color:rgba(255,255,255,0.3);">NIST Cybersecurity Framework</a> ·
+        <a href="https://www.iso.org/standard/27001" target="_blank" class="doc-link" style="color:rgba(255,255,255,0.3);">ISO/IEC 27001</a> ·
+        <a href="https://attack.mitre.org" target="_blank" class="doc-link" style="color:rgba(255,255,255,0.3);">MITRE ATT&amp;CK</a> ·
+        <a href="https://www.ccdcoe.org" target="_blank" class="doc-link" style="color:rgba(255,255,255,0.3);">NATO CCDCOE</a> ·
+        <a href="https://www.coe.int/en/web/cybercrime/the-budapest-convention" target="_blank" class="doc-link" style="color:rgba(255,255,255,0.3);">Budapest Convention</a>
+      </div>
+      <div class="footer-right">
+        <div class="footer-source">Fonte: MD · ComDCiber · GSI/PR · Gov. Paraná — 2025</div>
+        <div class="footer-radix"><span class="r">RADIX</span> <span class="c">CYBER</span></div>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <!-- PROGRESS DOTS -->
+  <div class="progress-dots" id="progressDots">
+    <div class="prog-dot active" onclick="goTo(0)" title="Pirâmide"></div>
+    <div class="prog-dot" onclick="goTo(1)" title="Linha do Tempo"></div>
+    <div class="prog-dot" onclick="goTo(2)" title="Documentos"></div>
+    <div class="prog-dot" onclick="goTo(3)" title="Legenda"></div>
+  </div>
+
+  <!-- KEYBOARD HINT -->
+  <div class="kbd-hint">
+    <span class="kbd">←</span> <span class="kbd">→</span> navegar seções &nbsp;·&nbsp;
+    <span class="kbd">↑</span> <span class="kbd">↓</span> tópico anterior / próximo &nbsp;·&nbsp;
+    passe o mouse nos <span style="color:var(--red);font-weight:700;">★</span> para ver resumos
+  </div>
+
+</div><!-- /shell -->
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-inner">
+    <div class="tooltip-tag" id="tt-tag"></div>
+    <div class="tooltip-title" id="tt-title"></div>
+    <div class="tooltip-desc" id="tt-desc"></div>
+    <div class="tooltip-year" id="tt-year"></div>
+  </div>
+</div>
+
+<script>
+// ── STATE ────────────────────────────────────────────
+let current = 0;
+const total = 4;
+
+// ── NAVIGATION ───────────────────────────────────────
+function goTo(idx, direction) {
+  if (idx < 0 || idx >= total) return;
+  const panels = document.querySelectorAll('.panel');
+  const tabs   = document.querySelectorAll('.nav-tab');
+  const dots   = document.querySelectorAll('.prog-dot');
+
+  const dir = direction ?? (idx > current ? 1 : -1);
+
+  panels[current].style.display = 'none';
+  panels[current].classList.remove('active', 'slide-left', 'slide-right');
+
+  current = idx;
+
+  panels[current].style.display = 'block';
+  panels[current].classList.add('active');
+  // Trigger reflow for animation
+  void panels[current].offsetWidth;
+  panels[current].classList.add(dir > 0 ? 'slide-left' : 'slide-right');
+
+  tabs.forEach((t, i) => t.classList.toggle('active', i === current));
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+  // Update arrows
+  document.getElementById('btnPrev').classList.toggle('disabled', current === 0);
+  document.getElementById('btnNext').classList.toggle('disabled', current === total - 1);
+}
+
+function navigate(dir) { goTo(current + dir, dir); }
+
+// ── KEYBOARD ─────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); navigate(-1); }
+});
+
+// ── TOOLTIP ──────────────────────────────────────────
+const tooltip  = document.getElementById('tooltip');
+const ttTag    = document.getElementById('tt-tag');
+const ttTitle  = document.getElementById('tt-title');
+const ttDesc   = document.getElementById('tt-desc');
+const ttYear   = document.getElementById('tt-year');
+let   ttTimer  = null;
+let   ttActive = false;
+
+function showTip(el, e) {
+  const tip  = el.dataset.tip;
+  const desc = el.dataset.desc;
+  const year = el.dataset.year;
+  if (!tip || !desc) return;
+
+  ttTag.textContent   = '★ DOCUMENTO';
+  ttTitle.textContent = tip;
+  ttDesc.textContent  = desc;
+  ttYear.textContent  = year || '';
+
+  positionTip(e);
+  tooltip.classList.add('visible');
+  ttActive = true;
+}
+
+function positionTip(e) {
+  const tw = 268;
+  const th = tooltip.offsetHeight || 100;
+  let x = e.clientX - tw / 2;
+  let y = e.clientY - th - 16;
+
+  // Keep within viewport
+  x = Math.max(8, Math.min(x, window.innerWidth - tw - 8));
+  if (y < 8) y = e.clientY + 20; // flip below if no room above
+
+  tooltip.style.left = x + 'px';
+  tooltip.style.top  = y + 'px';
+}
+
+function hideTip() {
+  ttActive = false;
+  tooltip.classList.remove('visible');
+}
+
+// Attach to all elements with data-tip
+document.addEventListener('mouseover', e => {
+  const el = e.target.closest('[data-tip]');
+  if (el) {
+    clearTimeout(ttTimer);
+    ttTimer = setTimeout(() => showTip(el, e), 120);
+  }
+});
+
+document.addEventListener('mousemove', e => {
+  if (ttActive) positionTip(e);
+  const el = e.target.closest('[data-tip]');
+  if (!el && ttActive) hideTip();
+});
+
+document.addEventListener('mouseout', e => {
+  const el = e.target.closest('[data-tip]');
+  if (el && !e.relatedTarget?.closest('[data-tip]')) {
+    clearTimeout(ttTimer);
+    hideTip();
+  }
+});
+
+// Prevent tooltip flickering on link hover
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-tip]')) hideTip();
+});
+
+// ── INIT ─────────────────────────────────────────────
+goTo(0, 1);
+</script>
+</body>
+</html>
